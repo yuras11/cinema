@@ -1,3 +1,5 @@
+from typing_inspection.typing_objects import is_classvar
+
 from dao.base_dao import BaseDAO
 from entity.seat import Seat
 
@@ -29,6 +31,16 @@ class SeatDAO(BaseDAO):
             cursor.execute("SELECT * FROM seat WHERE hallID = %s", (hall_id,))
             rows = cursor.fetchall()
             return [Seat(*row) for row in rows]
+
+
+    def get_by_hall_occupation(self, hall_id: str, is_occupied: bool):
+        with self._connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM seat WHERE hallID = %s AND isOccupied = %s",
+                (hall_id, is_occupied)
+            )
+            seats = cursor.fetchall()
+            return [Seat(*row) for row in seats]
 
 
     def create(self, entity: Seat):

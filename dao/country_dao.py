@@ -51,6 +51,16 @@ class CountryDAO(BaseDAO):
             return movie_countries
 
 
+    def get_by_name(self, name: str):
+        with self._connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM country_names WHERE countryName = %s",
+                (name,)
+            )
+            row = cursor.fetchone()
+            return Country(*row)
+
+
     def create(self, entity: Country):
         self.execute_query(
             "INSERT INTO country (countryCode) VALUES (%s)",

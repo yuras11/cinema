@@ -11,6 +11,7 @@ from dao.position_dao import PositionDAO
 from dao.seat_dao import SeatDAO
 from dao.user_dao import UserDAO
 from entity.cast_member import CastMember
+from service.cast_member_service import CastMemberService
 from service.cinema_session_service import CinemaSessionService
 from service.country_service import CountryService
 from service.movie_service import MovieService
@@ -31,6 +32,6 @@ connection = psycopg2.connect(
     )
 
 
-cinema = CinemaSessionService(CinemaSessionDAO(connection))
-m = cinema.get("69dd5174-4c78-4d0f-a6e8-b24482af20a9", "108fb5a2-c524-4fc2-9789-7b7a6ee93c5f", "2025-03-21", "20:30:00")
-print(m)
+cc = MovieService(MovieDAO(connection))
+c = cc.get_by_cast_member("e5227984-ccf5-408b-8f18-f8b43591a110")
+print(c)

@@ -50,6 +50,16 @@ class MovieDAO(BaseDAO):
             return self.__get_single_entry(cursor, movie_id)
 
 
+    def get_by_cast_member(self, member_id: str):
+        with self._connection.cursor() as cursor:
+            cursor.execute("SELECT movieID FROM movie_cast WHERE memberID = %s", (member_id,))
+            movie_ids = [row[0] for row in cursor.fetchall()]
+            movies = []
+            for movie_id in movie_ids:
+                movies.append(self.__get_single_entry(cursor, movie_id))
+            return movies
+
+
     def get_by_country(self, country_code: str) -> list[Movie]:
         with self._connection.cursor() as cursor:
             cursor.execute(

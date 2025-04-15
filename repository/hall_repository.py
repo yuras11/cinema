@@ -1,5 +1,5 @@
 from repository.base_repository import BaseRepository
-from repository.seat_dao import SeatRepository
+from repository.seat_repository import SeatRepository
 from entity.hall import Hall
 from entity.seat import Seat
 

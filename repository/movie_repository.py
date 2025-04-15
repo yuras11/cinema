@@ -1,7 +1,7 @@
 from repository.base_repository import BaseRepository
-from repository.cast_member_dao import CastMemberRepository
-from repository.country_dao import CountryRepository
-from repository.genre_dao import GenreRepository
+from repository.cast_member_repository import CastMemberRepository
+from repository.country_repository import CountryRepository
+from repository.genre_repository import GenreRepository
 from entity.movie import Movie
 
 lang = 'RU'

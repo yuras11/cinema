@@ -1,11 +1,11 @@
-from repository.country_dao import CountryRepository
+from repository.country_repository import CountryRepository
 from service.base_service import BaseService
 
 
 class CountryService(BaseService):
-    def __init__(self, dao: CountryRepository):
-        super().__init__(dao)
+    def __init__(self, repository: CountryRepository):
+        super().__init__(repository)
 
 
     def get_by_name(self, name: str):
-        return self._dao.get_by_name(name)
+        return self._repository.get_by_name(name)

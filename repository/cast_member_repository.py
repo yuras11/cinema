@@ -1,6 +1,6 @@
 from repository.base_repository import BaseRepository
-from repository.country_dao import CountryRepository
-from repository.position_dao import PositionRepository
+from repository.country_repository import CountryRepository
+from repository.position_repository import PositionRepository
 from entity.cast_member import CastMember
 
 

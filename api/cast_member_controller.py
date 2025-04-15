@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from service.cast_member_service import CastMemberService
-from repository.cast_member_dao import CastMemberRepository
+from repository.cast_member_repository import CastMemberRepository
 
 router = APIRouter(prefix="/cast_members", tags=["Cast Members"])
 

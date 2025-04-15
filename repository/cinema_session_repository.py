@@ -1,6 +1,6 @@
 from repository.base_repository import BaseRepository
-from repository.movie_dao import MovieRepository
-from repository.hall_dao import HallRepository
+from repository.movie_repository import MovieRepository
+from repository.hall_repository import HallRepository
 from entity.cinema_session import CinemaSession
 
 

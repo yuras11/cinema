@@ -1,15 +1,15 @@
 import psycopg2
 import uuid
 
-from repository.cast_member_dao import CastMemberRepository
-from repository.cinema_session_dao import CinemaSessionRepository
-from repository.country_dao import CountryRepository
-from repository.genre_dao import GenreRepository
-from repository.hall_dao import HallRepository
-from repository.movie_dao import MovieRepository
-from repository.position_dao import PositionRepository
-from repository.seat_dao import SeatRepository
-from repository.user_dao import UserRepository
+from repository.cast_member_repository import CastMemberRepository
+from repository.cinema_session_repository import CinemaSessionRepository
+from repository.country_repository import CountryRepository
+from repository.genre_repository import GenreRepository
+from repository.hall_repository import HallRepository
+from repository.movie_repository import MovieRepository
+from repository.position_repository import PositionRepository
+from repository.seat_repository import SeatRepository
+from repository.user_repository import UserRepository
 from entity.cast_member import CastMember
 from service.cast_member_service import CastMemberService
 from service.cinema_session_service import CinemaSessionService

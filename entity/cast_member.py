@@ -29,29 +29,35 @@ class CastMember(Entity):
     def date_of_birth(self, date_of_birth):
         self.__date_of_birth = date_of_birth
 
+
     def get_country(self):
         return self.__country
+
 
     def get_member_positions(self):
         return self.__member_positions
 
+
     def to_dict(self) -> dict:
         return {
-            '__member_id' : self.__member_id,
-            '__member_name' : self.__member_name,
-            '__date_of_birth' : self.__date_of_birth,
-            '__country' : self.__country,
-            '__member_positions' : self.__member_positions
+            'memberID' : self.__member_id,
+            'memberName' : self.__member_name,
+            'dateOfBirth' : self.__date_of_birth,
+            'country' : self.__country,
+            'member_positions' : self.__member_positions
         }
 
     def __eq__(self, other):
         return self.__member_id == other.get_member_id()
 
-    def __hash__(self):
-        pass
 
-    def __repr__(self):
-        return self.__member_name
+    def __hash__(self):
+        return hash(self.__member_id)
+
 
     def __str__(self):
-        return self.__member_name
+        return str(self.to_dict())
+
+
+    def __repr__(self):
+        return str(self.to_dict())

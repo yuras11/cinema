@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseDAO(ABC):
+class BaseRepository(ABC):
     def __init__(self, connection):
         self._connection = connection
 

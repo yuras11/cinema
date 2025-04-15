@@ -1,14 +1,14 @@
-from dao.base_dao import BaseDAO
-from dao.movie_dao import MovieDAO
-from dao.hall_dao import HallDAO
+from repository.base_repository import BaseRepository
+from repository.movie_dao import MovieRepository
+from repository.hall_dao import HallRepository
 from entity.cinema_session import CinemaSession
 
 
-class CinemaSessionDAO(BaseDAO):
+class CinemaSessionRepository(BaseRepository):
     def __init__(self, connection):
         super().__init__(connection)
-        self.__movie_dao = MovieDAO(connection)
-        self.__hall_dao = HallDAO(connection)
+        self.__movie_dao = MovieRepository(connection)
+        self.__hall_dao = HallRepository(connection)
 
 
     def __get_single_entry(self, cursor, movie_id, hall_id, date, time):

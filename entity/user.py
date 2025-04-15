@@ -43,11 +43,14 @@ class User(Entity):
     def surname(self, surname):
         self.__surname = surname
 
+
     def get_role(self):
         return self.__role
 
+
     def get_user_id(self):
         return self.__user_id
+
 
     def to_dict(self) -> dict:
         return {
@@ -57,14 +60,18 @@ class User(Entity):
             '__surname' : self.__surname
         }
 
+
     def __eq__(self, other):
-        return hash(self) == hash(other)
+        return self.get_user_id() == other.get_user_id()
+
 
     def __hash__(self):
-        return hash((self.__login, self.__name, self.__surname))
+        return hash(self.get_user_id())
+
 
     def __repr__(self):
         return f'{self.__name} {self.__surname}'
+
 
     def __str__(self):
         return f'{self.__name} {self.__surname}'

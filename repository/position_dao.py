@@ -1,8 +1,8 @@
-from dao.base_dao import BaseDAO
+from repository.base_repository import BaseRepository
 from entity.position import Position
 
 
-class PositionDAO(BaseDAO):
+class PositionRepository(BaseRepository):
     def get_all(self) -> list[Position]:
         with self._connection.cursor() as cursor:
             cursor.execute(

@@ -1,10 +1,10 @@
-from dao.base_dao import BaseDAO
+from repository.base_repository import BaseRepository
 from entity.country import Country
 
 lang = 'RU'
 
 
-class CountryDAO(BaseDAO):
+class CountryRepository(BaseRepository):
     def get_all(self) -> list[Country]:
         with self._connection.cursor() as cursor:
             cursor.execute(

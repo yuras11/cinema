@@ -1,15 +1,15 @@
 import psycopg2
 import uuid
 
-from dao.cast_member_dao import CastMemberDAO
-from dao.cinema_session_dao import CinemaSessionDAO
-from dao.country_dao import CountryDAO
-from dao.genre_dao import GenreDAO
-from dao.hall_dao import HallDAO
-from dao.movie_dao import MovieDAO
-from dao.position_dao import PositionDAO
-from dao.seat_dao import SeatDAO
-from dao.user_dao import UserDAO
+from repository.cast_member_dao import CastMemberRepository
+from repository.cinema_session_dao import CinemaSessionRepository
+from repository.country_dao import CountryRepository
+from repository.genre_dao import GenreRepository
+from repository.hall_dao import HallRepository
+from repository.movie_dao import MovieRepository
+from repository.position_dao import PositionRepository
+from repository.seat_dao import SeatRepository
+from repository.user_dao import UserRepository
 from entity.cast_member import CastMember
 from service.cast_member_service import CastMemberService
 from service.cinema_session_service import CinemaSessionService
@@ -32,6 +32,6 @@ connection = psycopg2.connect(
     )
 
 
-cc = MovieService(MovieDAO(connection))
-c = cc.get_by_cast_member("e5227984-ccf5-408b-8f18-f8b43591a110")
-print(c)
+cmd = CastMemberRepository(connection)
+cast_member = cmd.get_by_name('Мэттью Макконахи')
+print(cast_member)

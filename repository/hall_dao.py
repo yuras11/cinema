@@ -1,14 +1,14 @@
-from dao.base_dao import BaseDAO
-from dao.seat_dao import SeatDAO
+from repository.base_repository import BaseRepository
+from repository.seat_dao import SeatRepository
 from entity.hall import Hall
 from entity.seat import Seat
 
 lang = 'RU'
 
-class HallDAO(BaseDAO):
+class HallRepository(BaseRepository):
     def __init__(self, connection):
         super().__init__(connection)
-        self.__seat_dao = SeatDAO(connection)
+        self.__seat_dao = SeatRepository(connection)
 
 
     def __get_single_entry(self, cursor, hall_id):

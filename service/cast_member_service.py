@@ -1,10 +1,10 @@
-from dao.cast_member_dao import CastMemberDAO
+from repository.cast_member_dao import CastMemberRepository
 from entity.cast_member import CastMember
 from service.base_service import BaseService
 
 
 class CastMemberService(BaseService):
-    def __init__(self, dao: CastMemberDAO):
+    def __init__(self, dao: CastMemberRepository):
         super().__init__(dao)
 
 

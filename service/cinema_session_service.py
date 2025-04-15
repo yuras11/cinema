@@ -1,9 +1,9 @@
-from dao.cinema_session_dao import CinemaSessionDAO
+from repository.cinema_session_dao import CinemaSessionRepository
 from service.base_service import BaseService
 
 
 class CinemaSessionService(BaseService):
-    def __init__(self, dao: CinemaSessionDAO):
+    def __init__(self, dao: CinemaSessionRepository):
         super().__init__(dao)
 
 

@@ -1,9 +1,9 @@
-from dao.base_dao import BaseDAO
+from repository.base_repository import BaseRepository
 from entity.genre import Genre
 
 lang = 'RU'
 
-class GenreDAO(BaseDAO):
+class GenreRepository(BaseRepository):
     def get_all(self) -> list[Genre]:
         with self._connection.cursor() as cursor:
             cursor.execute(

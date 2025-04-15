@@ -11,8 +11,10 @@ class CinemaSession(Entity):
         self.__ticket_fee = ticket_fee
         self.__currency = currency
 
+
     def get_movie(self):
         return self.__movie
+
 
     def get_hall(self):
         return self.__hall
@@ -49,6 +51,7 @@ class CinemaSession(Entity):
     def currency(self, currency):
         self.__currency = currency
 
+
     def to_dict(self) -> dict:
         return {
             '__movie' : self.__movie,
@@ -59,14 +62,20 @@ class CinemaSession(Entity):
             '__currency' : self.__currency
         }
 
+
     def __eq__(self, other):
-        return hash(self) == hash(other)
+        return self.get_movie() == other.get_movie() and \
+               self.get_hall() == other.get_hall() and \
+               self.date == other.date and self.time == other.time
+
 
     def __hash__(self):
         return hash((self.__movie, self.__hall, self.__date, self.__time))
 
-    # def __repr__(self):
-    #     return f'{self.__movie.get_movie_name()}, {self.__hall.get_hall_name()}, {self.__date}, {self.__time}'
+
+    def __repr__(self):
+        return str(self.to_dict())
+
 
     def __str__(self):
-        return f'{self.__movie.get_movie_name()}, {self.__hall.get_hall_name()}, {self.__date}, {self.__time}'
+        return str(self.to_dict())

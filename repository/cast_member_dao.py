@@ -1,16 +1,16 @@
-from dao.base_dao import BaseDAO
-from dao.country_dao import CountryDAO
-from dao.position_dao import PositionDAO
+from repository.base_repository import BaseRepository
+from repository.country_dao import CountryRepository
+from repository.position_dao import PositionRepository
 from entity.cast_member import CastMember
 
 
 lang = 'RU'
 
-class CastMemberDAO(BaseDAO):
+class CastMemberRepository(BaseRepository):
     def __init__(self, connection):
         super().__init__(connection)
-        self.__country_dao = CountryDAO(connection)
-        self.__position_dao = PositionDAO(connection)
+        self.__country_dao = CountryRepository(connection)
+        self.__position_dao = PositionRepository(connection)
 
 
     def __get_single_entry(self, cursor, member_id):

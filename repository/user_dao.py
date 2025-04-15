@@ -1,8 +1,8 @@
-from dao.base_dao import BaseDAO
+from repository.base_repository import BaseRepository
 from entity.user import User
 
 
-class UserDAO(BaseDAO):
+class UserRepository(BaseRepository):
     def get_all(self) -> list[User]:
         with self._connection.cursor() as cursor:
             cursor.execute("SELECT * FROM cinema_user")

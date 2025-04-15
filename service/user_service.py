@@ -1,10 +1,10 @@
-from dao.user_dao import UserDAO
+from repository.user_dao import UserRepository
 from entity.user import User
 from service.base_service import BaseService
 
 
 class UserService(BaseService):
-    def __init__(self, dao: UserDAO):
+    def __init__(self, dao: UserRepository):
         super().__init__(dao)
 
 

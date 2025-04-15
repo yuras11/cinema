@@ -13,6 +13,7 @@ class Movie(Entity):
         self.__release_date = release_date
         self.__age_rate = age_rate
 
+
     def get_movie_id(self):
         return self.__movie_id
 
@@ -20,14 +21,18 @@ class Movie(Entity):
     def get_movie_name(self):
         return self.__movie_name
 
+
     def get_movie_countries(self):
         return self.__movie_countries
+
 
     def get_movie_cast(self):
         return self.__movie_cast
 
+
     def get_movie_genres(self):
         return self.__movie_genres
+
 
     @property
     def duration(self):
@@ -37,11 +42,14 @@ class Movie(Entity):
     def duration(self, duration):
         self.__duration = duration
 
+
     def get_release_date(self):
         return self.__release_date
 
+
     def get_age_rate(self):
         return self.__age_rate
+
 
     def to_dict(self) -> dict:
         return {
@@ -55,14 +63,18 @@ class Movie(Entity):
             '__age_rate' : self.__age_rate
         }
 
+
     def __eq__(self, other):
-        return self.__movie_id == other.get_movie_id()
+        return self.get_movie_id() == other.get_movie_id()
+
 
     def __hash__(self):
-        pass
+        return str(self.get_movie_id())
+
 
     def __repr__(self):
-        return self.__movie_name
+        return str(self.to_dict())
+
 
     def __str__(self):
-        return self.get_movie_name()
+        return str(self.to_dict())

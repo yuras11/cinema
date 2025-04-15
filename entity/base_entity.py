@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class Entity(ABC):
     def __init__(self, *args, **kwargs):
-        pass  # Базовый конструктор
+        pass
 
     @abstractmethod
     def to_dict(self) -> dict:
@@ -20,5 +20,9 @@ class Entity(ABC):
 
     @abstractmethod
     def __str__(self):
+        pass
+
+    @abstractmethod
+    def __repr__(self):
         pass
     

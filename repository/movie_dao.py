@@ -1,17 +1,17 @@
-from dao.base_dao import BaseDAO
-from dao.cast_member_dao import CastMemberDAO
-from dao.country_dao import CountryDAO
-from dao.genre_dao import GenreDAO
+from repository.base_repository import BaseRepository
+from repository.cast_member_dao import CastMemberRepository
+from repository.country_dao import CountryRepository
+from repository.genre_dao import GenreRepository
 from entity.movie import Movie
 
 lang = 'RU'
 
-class MovieDAO(BaseDAO):
+class MovieRepository(BaseRepository):
     def __init__(self, connection):
         super().__init__(connection)
-        self.__country_dao = CountryDAO(connection)
-        self.__cast_member_dao = CastMemberDAO(connection)
-        self.__genre_dao = GenreDAO(connection)
+        self.__country_dao = CountryRepository(connection)
+        self.__cast_member_dao = CastMemberRepository(connection)
+        self.__genre_dao = GenreRepository(connection)
 
     def __get_single_entry(self, cursor, movie_id):
         cursor.execute("SELECT * FROM movie WHERE movieID = %s", (movie_id,))

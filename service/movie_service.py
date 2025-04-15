@@ -1,9 +1,9 @@
-from dao.movie_dao import MovieDAO
+from repository.movie_dao import MovieRepository
 from service.base_service import BaseService
 
 
 class MovieService(BaseService):
-    def __init__(self, dao: MovieDAO):
+    def __init__(self, dao: MovieRepository):
         super().__init__(dao)
 
 

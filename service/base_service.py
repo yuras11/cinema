@@ -1,5 +1,5 @@
-from dao.base_dao import BaseDAO
-from typing import Generic, TypeVar
+from repository.base_repository import BaseRepository
+
 
 
 class BaseService:

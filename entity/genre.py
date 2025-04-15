@@ -8,8 +8,10 @@ class Genre(Entity):
         self.__language_code = language_code
         self.__genre_name = genre_name
 
+
     def get_genre_id(self):
         return self.__genre_id
+
 
     def get_language_code(self):
         return self.__language_code
@@ -22,6 +24,7 @@ class Genre(Entity):
     def genre_name(self, genre_name):
         self.__genre_name = genre_name
 
+
     def to_dict(self) -> dict:
         return {
             '__genre_id': self.__genre_id,
@@ -30,13 +33,16 @@ class Genre(Entity):
         }
 
     def __eq__(self, other):
-        return self.__genre_id == other.get_genre_id()
+        return self.get_genre_id() == other.get_genre_id()
+
 
     def __hash__(self):
-        pass
+        return hash(self.get_genre_id())
+
 
     def __repr__(self):
-        return self.__genre_name
+        return str(self.to_dict())
+
 
     def __str__(self):
-        return self.__genre_name
+        return str(self.to_dict())

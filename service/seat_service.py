@@ -1,10 +1,10 @@
-from dao.seat_dao import SeatDAO
+from repository.seat_dao import SeatRepository
 from entity.seat import Seat
 from service.base_service import BaseService
 
 
 class SeatService(BaseService):
-    def __init__(self, dao: SeatDAO):
+    def __init__(self, dao: SeatRepository):
         super().__init__(dao)
 
 

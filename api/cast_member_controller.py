@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from service.cast_member_service import CastMemberService
-from dao.cast_member_dao import CastMemberDAO
+from repository.cast_member_dao import CastMemberRepository
 
 router = APIRouter(prefix="/cast_members", tags=["Cast Members"])
 
 # Внедряем DAO и сервис через зависимость (Dependency Injection)
 def get_service():
-    return CastMemberService(dao=CastMemberDAO())
+    return CastMemberService(dao=CastMemberRepository())
 
 # Получение актера по ID
 @router.get("/{member_id}")

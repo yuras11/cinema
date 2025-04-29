@@ -1,6 +1,6 @@
-from repository.base_repository import BaseRepository
-from repository.movie_repository import MovieRepository
-from repository.hall_repository import HallRepository
+from repository_old.base_repository import BaseRepository
+from repository_old.movie_repository import MovieRepository
+from repository_old.hall_repository import HallRepository
 from entity.cinema_session import CinemaSession
 
 

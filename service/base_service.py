@@ -1,26 +1,26 @@
-from repository.base_repository import BaseRepository
 
 
-class BaseService:
-    def __init__(self, repository):
-        self._repository = repository
+
+class Service:
+    def __init__(self):
+        self._repository = None
+
 
     def get_all(self):
-        """Получает все записи"""
         return self._repository.get_all()
 
-    def get(self, *keys):
-        """Получает запись по составному ключу"""
-        return self._repository.get(*keys)
 
-    def create(self, entity):
-        """Создает новую запись"""
-        return self._repository.create(entity)
+    def get_by_id(self, *keys):
+        return self._repository.get_by_id(*keys)
 
-    def update(self, entity):
-        """Обновляет запись"""
-        return self._repository.update(entity)
 
-    def delete(self, *keys):
-        """Удаляет запись"""
-        return self._repository.delete(*keys)
+    def insert(self, model):
+        self._repository.insert(model)
+
+
+    def update(self, model):
+        self._repository.update(model)
+
+
+    def delete(self, model):
+        self._repository.delete(model)

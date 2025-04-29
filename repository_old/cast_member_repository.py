@@ -1,6 +1,6 @@
-from repository.base_repository import BaseRepository
-from repository.country_repository import CountryRepository
-from repository.position_repository import PositionRepository
+from repository_old.base_repository import BaseRepository
+from repository_old.country_repository import CountryRepository
+from repository_old.position_repository import PositionRepository
 from entity.cast_member import CastMember
 
 

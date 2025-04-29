@@ -1,6 +1,6 @@
 from typing_inspection.typing_objects import is_classvar
 
-from repository.base_repository import BaseRepository
+from repository_old.base_repository import BaseRepository
 from entity.seat import Seat
 
 

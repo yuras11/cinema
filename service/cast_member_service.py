@@ -1,12 +1,12 @@
-from repository.cast_member_repository import CastMemberRepository
-from entity.cast_member import CastMember
-from service.base_service import BaseService
+from repository.cast_member_repo import CastMemberRepository
+from service.base_service import Service
 
 
-class CastMemberService(BaseService):
-    def __init__(self, repository: CastMemberRepository):
-        super().__init__(repository)
+class CastMemberService(Service):
+    def __init__(self):
+        super().__init__()
+        self._repository = CastMemberRepository()
 
 
-    def get_by_movie(self, movie_id: str):
-        return self._repository.get_by_movie(movie_id)
+    def get_by_name(self, name: str):
+        return self._repository.get_by_name(name)

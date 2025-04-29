@@ -1,15 +1,14 @@
-from repository.movie_repository import MovieRepository
-from service.base_service import BaseService
+from entity.movie import Movie
+from repository.movie_repo import MovieRepository
+from service.base_service import Service
+from sqlalchemy.orm import Session
 
 
-class MovieService(BaseService):
-    def __init__(self, repository: MovieRepository):
-        super().__init__(repository)
+class MovieService(Service):
+    def __init__(self):
+        super().__init__()
+        self._repository = MovieRepository()
 
 
-    def get_by_country(self, country_code):
-        return self._repository.get_by_country(country_code)
-
-
-    def get_by_cast_member(self, member_id: str):
-        return self._repository.get_by_cast_member(member_id)
+    def get_by_name(self, name):
+        return self._repository.get_by_name(name)

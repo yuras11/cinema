@@ -1,10 +1,11 @@
 from repository.country_repository import CountryRepository
-from service.base_service import BaseService
+from service.base_service import Service
 
 
-class CountryService(BaseService):
-    def __init__(self, repository: CountryRepository):
-        super().__init__(repository)
+class CountryService(Service):
+    def __init__(self):
+        super().__init__()
+        self._repository = CountryRepository()
 
 
     def get_by_name(self, name: str):

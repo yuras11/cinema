@@ -1,7 +1,7 @@
-from repository.base_repository import BaseRepository
-from repository.cast_member_repository import CastMemberRepository
-from repository.country_repository import CountryRepository
-from repository.genre_repository import GenreRepository
+from repository_old.base_repository import BaseRepository
+from repository_old.cast_member_repository import CastMemberRepository
+from repository_old.country_repository import CountryRepository
+from repository_old.genre_repository import GenreRepository
 from entity.movie import Movie
 
 lang = 'RU'

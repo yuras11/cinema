@@ -1,4 +1,4 @@
-from repository.base_repository import BaseRepository
+from repository_old.base_repository import BaseRepository
 from entity.position import Position
 
 

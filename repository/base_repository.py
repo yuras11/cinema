@@ -1,36 +1,33 @@
 from abc import ABC, abstractmethod
+from sqlalchemy.orm.session import Session
+from config import Session
 
-
-class BaseRepository(ABC):
-    def __init__(self, connection):
-        self._connection = connection
-
-    def execute_query(self, query: str, params: tuple):
-        with self._connection.cursor() as cursor:
-            cursor.execute(query, params)
-        self._connection.commit()
+class Repository(ABC):
+    def __init__(self):
+        self._session = Session()
 
     @abstractmethod
     def get_all(self):
-        """Получение всех сущностей"""
         pass
 
     @abstractmethod
-    def get(self, *keys):
-        """Получение сущности по первичному ключу"""
+    def get_by_id(self, *keys):
         pass
 
-    @abstractmethod
-    def create(self, entity):
-        """Добавление сущности в базу"""
-        pass
 
-    @abstractmethod
-    def update(self, entity):
-        """Обновление сущности"""
-        pass
+    def insert(self, model):
+        with self._session as session:
+            session.add(model)
+            session.commit()
 
-    @abstractmethod
-    def delete(self, entity):
-        """Удаление сущности"""
-        pass
+
+    def update(self, model):
+        with self._session as session:
+            session.merge(model)
+            session.commit()
+
+
+    def delete(self, model):
+        with self._session as session:
+            session.delete(model)
+            session.commit()

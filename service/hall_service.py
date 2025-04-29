@@ -1,8 +1,13 @@
 from repository.hall_repository import HallRepository
-from entity.hall import Hall
-from service.base_service import BaseService
+from sqlalchemy.orm import Session
+from service.base_service import Service
 
 
-class HallService(BaseService):
-    def __init__(self, repository: HallRepository):
-        super().__init__(repository)
+class HallService(Service):
+    def __init__(self):
+        super().__init__()
+        self._repository = HallRepository()
+
+
+    def get_by_name(self, name):
+        return self._repository.get_by_name(name)

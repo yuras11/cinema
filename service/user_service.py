@@ -1,12 +1,12 @@
 from repository.user_repository import UserRepository
-from entity.user import User
-from service.base_service import BaseService
+from service.base_service import Service
 
 
-class UserService(BaseService):
-    def __init__(self, repository: UserRepository):
-        super().__init__(repository)
+class UserService(Service):
+    def __init__(self):
+        super().__init__()
+        self._repository = UserRepository()
 
 
-    def get_user_by_initials(self, name, surname):
-        return self._repository.find(name, surname)
+    def get_by_name(self, name):
+        return self._repository.get_by_name(name)

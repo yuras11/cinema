@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Кинотеатр "КиноМир"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #00BFFF;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .banner {
+            background-image: url('https://images.unsplash.com/photo-1604573477938-4b04fd7f1154?fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            height: 400px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .banner h2 {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-size: 40px;
+            background-color: rgba(0,0,0,0.6);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .now-showing {
+            margin-top: 50px;
+        }
+
+        .now-showing h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .movies {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .movie {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .movie img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .movie h4 {
+            margin: 10px 0 5px;
+        }
+
+        .movie p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0,0,0,0.7);
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .movie {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>КиноМир</h1>
+        <p>Твое путешествие в мир кино начинается здесь</p>
+    </header>
+
+    <div class="container">
+        <div class="banner">
+            <h2>Смотрите сегодня: "Погоня за мечтой"</h2>
+        </div>
+
+        <div class="now-showing">
+            <h3>Сейчас в прокате</h3>
+            <div class="movies">
+                <div class="movie">
+                    <img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" alt="Movie 1">
+                    <h4>Форсаж 10</h4>
+                    <p>Семья, скорость и взрывы — всё как вы любите!</p>
+                </div>
+                <div class="movie">
+                    <img src="https://image.tmdb.org/t/p/w500/r7XifzvtezNt31ypvsmb6Oqxw49.jpg" alt="Movie 2">
+                    <h4>Оппенгеймер</h4>
+                    <p>История человека, который изменил мир — и разрушил его.</p>
+                </div>
+                <div class="movie">
+                    <img src="https://image.tmdb.org/t/p/w500/hkxxMIGaiCTmrEArK7J56JTKUlB.jpg" alt="Movie 3">
+                    <h4>Барби</h4>
+                    <p>Розовая феерия в мире реальности и фантазии.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 КиноМир. Все права защищены.
+    </footer>
+</body>
+</html>

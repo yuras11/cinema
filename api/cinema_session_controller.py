@@ -1,15 +1,21 @@
 import datetime
+from sys import prefix
 
 from fastapi import APIRouter
-from typing import Optional
+from typing import Optional, List
+
+from pydantic_schemas.cinema_session_schemas import CinemaSessionScheme
 from service.cinema_session_service import CinemaSessionService
 
 
-cinema_session_router = APIRouter()
+cinema_session_router = APIRouter(prefix='/cinema_sessions', tags=['Working with cinema sessions'])
 
-@cinema_session_router.get('/cinema_sessions')
-def get_cinema_sessions_by_date(date: Optional[datetime.date] = None):
-    cinema_session_service = CinemaSessionService()
-    if date is None:
-        return [(c.movie.names[0].moviename.strip(), c.hall.names[0].hallname.strip(), c.sessiondate, c.sessiontime) for c in cinema_session_service.get_all()]
-    return [(c.movie.names[0].moviename.strip(), c.hall.names[0].hallname.strip(), c.sessiondate, c.sessiontime) for c in cinema_session_service.get_by_date(date)]
+@cinema_session_router.get('/all')
+async def get_all_cinema_sessions():
+    cinema_sessions = await CinemaSessionService.get_all_cinema_sessions()
+    return [cinema_session.model_dump() for cinema_session in [CinemaSessionScheme.model_validate(c) for c in cinema_sessions]]
+
+
+@cinema_session_router.post('/create_cinema_session')
+async def create_cinema_session(cinema_session: CinemaSessionScheme):
+    pass

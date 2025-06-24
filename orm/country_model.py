@@ -11,13 +11,18 @@ class CountryModel(Base):
     countrycode: Mapped[str] = mapped_column(primary_key=True)
 
     names: Mapped[List["CountryNameModel"]] = relationship(
-        back_populates="country", cascade="all, delete-orphan", lazy='subquery'
+        back_populates="country", cascade="all, delete-orphan", lazy='joined'
     )
 
     cast_members: Mapped[List["CastMemberModel"]] = relationship(
         back_populates="country", cascade="all, delete-orphan"
     )
-    movies: Mapped[List["MovieCountryModel"]] = relationship(back_populates="countries")
+    movies: Mapped[List["MovieModel"]] = relationship(
+        secondary="movie_countries",
+        back_populates="countries",
+        lazy='joined'
+    )
+
 
 class CountryNameModel(Base):
     __tablename__ = "country_names"

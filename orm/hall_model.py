@@ -3,28 +3,30 @@ from orm.base_model import Base
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 from typing import List
+import uuid
 
 
 class HallModel(Base):
     __tablename__ = "hall"
 
-    hallid: Mapped[str] = mapped_column(primary_key=True)
+    hallid: Mapped[uuid.UUID] = mapped_column(primary_key=True)
 
     names: Mapped[List["HallNameModel"]] = relationship(
-        back_populates="hall", cascade="all, delete-orphan", lazy='subquery'
+        back_populates="hall", cascade="all, delete-orphan", lazy='joined', passive_deletes=True
     )
     seats: Mapped[List["SeatModel"]] = relationship(
-        back_populates="hall", cascade="all, delete-orphan", lazy='subquery'
+        back_populates="hall", cascade="all, delete-orphan", lazy='joined', passive_deletes=True
     )
     cinema_sessions: Mapped[List["CinemaSessionModel"]] = relationship(
-        back_populates="hall", cascade="all, delete-orphan", lazy='subquery'
+        back_populates="hall", cascade="all, delete-orphan", lazy='joined', passive_deletes=True
     )
+
 
 class HallNameModel(Base):
     __tablename__ = "hall_names"
     __table_args__ = (PrimaryKeyConstraint('hallid', 'languagecode'),)
 
-    hallid: Mapped[str] = mapped_column(ForeignKey(HallModel.hallid))
+    hallid: Mapped[uuid.UUID] = mapped_column(ForeignKey(HallModel.hallid, ondelete='CASCADE'))
     languagecode: Mapped[str] = mapped_column(String(2))
     hallname: Mapped[str] = mapped_column(String(50))
 
@@ -35,7 +37,7 @@ class SeatModel(Base):
     __tablename__ = "seat"
     __table_args__ = (PrimaryKeyConstraint('hallid', 'rownumber', 'seatnumber'),)
 
-    hallid: Mapped[str] = mapped_column(ForeignKey(HallModel.hallid))
+    hallid: Mapped[uuid.UUID] = mapped_column(ForeignKey(HallModel.hallid, ondelete='CASCADE'))
     rownumber: Mapped[int] = mapped_column(Integer)
     seatnumber: Mapped[int] = mapped_column(Integer)
     isoccupied: Mapped[bool] = mapped_column(Boolean)

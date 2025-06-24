@@ -16,6 +16,6 @@ async def get_all_cinema_sessions():
     return [cinema_session.model_dump() for cinema_session in [CinemaSessionScheme.model_validate(c) for c in cinema_sessions]]
 
 
-@cinema_session_router.post('/create_cinema_session')
-async def create_cinema_session(cinema_session: CinemaSessionScheme):
-    pass
+# @cinema_session_router.post('/create_cinema_session')
+# async def create_cinema_session(cinema_session: CinemaSessionScheme):
+#     pass

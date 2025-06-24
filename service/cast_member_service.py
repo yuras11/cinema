@@ -2,7 +2,7 @@ from repository.database import connection
 from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberNameScheme, CastMemberCreateScheme
 from repository.repos import CastMemberRepository
 import asyncio
-
+import uuid
 
 
 class CastMemberService:
@@ -14,6 +14,11 @@ class CastMemberService:
     @classmethod
     async def create_cast_member(cls, cast_member_scheme: CastMemberCreateScheme):
         return await CastMemberRepository.insert(cast_member_scheme=cast_member_scheme)
+
+
+    @classmethod
+    async def delete_cast_member(cls, memberid: uuid.UUID):
+        return await CastMemberRepository.delete(memberid=memberid)
 
 
 # cast_members = asyncio.get_event_loop().run_until_complete(CastMemberService.get_all_cast_members())

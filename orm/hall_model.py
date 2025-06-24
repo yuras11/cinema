@@ -1,9 +1,10 @@
-from sqlalchemy import String, PrimaryKeyConstraint, Boolean, Integer, ForeignKey
+from sqlalchemy import String, PrimaryKeyConstraint, Boolean, Integer, ForeignKey, ForeignKeyConstraint
 from orm.base_model import Base
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 from typing import List
 import uuid
+import datetime
 
 
 class HallModel(Base):
@@ -40,6 +41,47 @@ class SeatModel(Base):
     hallid: Mapped[uuid.UUID] = mapped_column(ForeignKey(HallModel.hallid, ondelete='CASCADE'))
     rownumber: Mapped[int] = mapped_column(Integer)
     seatnumber: Mapped[int] = mapped_column(Integer)
-    isoccupied: Mapped[bool] = mapped_column(Boolean)
 
     hall: Mapped["HallModel"] = relationship(back_populates="seats")
+
+    seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(
+        back_populates="seat", cascade="all, delete-orphan", passive_deletes=True
+    )
+
+
+class SeatStatusModel(Base):
+    __tablename__ = "seat_status"
+    __table_args__ = (
+        PrimaryKeyConstraint("movieid", "hallid", "sessiondate", "sessiontime", "rownumber", "seatnumber"),
+        ForeignKeyConstraint(
+            ["hallid", "rownumber", "seatnumber"],
+            ["seat.hallid", "seat.rownumber", "seat.seatnumber"],
+            ondelete="CASCADE"
+        ),
+        ForeignKeyConstraint(
+            ["movieid", "hallid", "sessiondate", "sessiontime"],
+            ["cinema_session.movieid", "cinema_session.hallid", "cinema_session.sessiondate",
+             "cinema_session.sessiontime"],
+            ondelete="CASCADE"
+        ),
+        ForeignKeyConstraint(
+            ["userid"], ["cinema_user.userid"],
+            ondelete="SET NULL"
+        )
+    )
+
+    movieid: Mapped[uuid.UUID]
+    hallid: Mapped[uuid.UUID]
+    sessiondate: Mapped[datetime.date]
+    sessiontime: Mapped[datetime.time]
+    rownumber: Mapped[int]
+    seatnumber: Mapped[int]
+    isoccupied: Mapped[bool] = mapped_column(default=False)
+
+    userid: Mapped[uuid.UUID] = mapped_column(nullable=True)
+
+    seat: Mapped["SeatModel"] = relationship(back_populates="seat_statuses")
+
+    cinema_session: Mapped["CinemaSessionModel"] = relationship(back_populates="seat_statuses")
+
+    user: Mapped["UserModel"] = relationship(back_populates="seat_statuses", lazy="joined")

@@ -22,9 +22,7 @@ async def get_hall_by_id(hallid):
 @hall_router.post('/create_hall')
 async def create_hall(hall_scheme: HallCreateScheme, user_data: UserModel = Depends(get_current_admin_user)):
     result = await HallService.create_hall(hall_scheme=hall_scheme)
-    if result:
-        return 'ok'
-    return 'not ok'
+    return {"message": 'Hall has been created'} if result else {'message': 'error'}
 
 
 # @hall_router.put('/update_hall')
@@ -34,6 +32,4 @@ async def create_hall(hall_scheme: HallCreateScheme, user_data: UserModel = Depe
 @hall_router.delete('/delete_hall')
 async def delete_hall(hallid, user_data: UserModel = Depends(get_current_admin_user)):
     result = await HallService.delete_hall(hallid=hallid)
-    if result:
-        return 'ok'
-    return 'not ok'
+    return {"message": 'Hall has been deleted'} if result else {'message': 'error'}

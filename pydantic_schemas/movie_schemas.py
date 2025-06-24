@@ -36,7 +36,7 @@ class MovieScheme(BaseModel):
     releasedate: date
     countries: List["CountryScheme"]
     genres: List["GenreScheme"]
-    cast: List["CastMemberScheme"]
+    # cast: List["CastMemberScheme"]
     model_config = {'from_attributes': True}
 
 

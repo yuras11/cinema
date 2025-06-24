@@ -63,7 +63,8 @@ class CastMemberModel(Base):
     names: Mapped[List["CastMemberNameModel"]] = relationship(
         back_populates="cast_member",
         cascade="all, delete-orphan",
-        lazy='joined'
+        lazy='joined',
+        passive_deletes=True
     )
 
     positions: Mapped[List["PositionModel"]] = relationship(

@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter
 
 from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberNameScheme, PositionScheme, PositionNameScheme, CastMemberCreateScheme
@@ -26,5 +28,6 @@ async def update_cast_member(cast_member_scheme: CastMemberScheme):
 
 
 @cast_member_router.delete('/delete_cast_member')
-async def delete_cast_member(cast_member_scheme: CastMemberScheme):
-    pass
+async def delete_cast_member(memberid: uuid.UUID):
+    result = await CastMemberService.delete_cast_member(memberid=memberid)
+    return {'message': 'Cast member has been successfully deleted'} if result else {'message': 'Error'}

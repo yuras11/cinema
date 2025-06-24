@@ -16,7 +16,6 @@ class SeatScheme(BaseModel):
     hallid: uuid.UUID
     rownumber: int
     seatnumber: int
-    isoccupied: bool
     model_config = {'from_attributes': True}
 
 

@@ -153,8 +153,7 @@ class HallRepository(Repository):
                     SeatModel(
                         hallid=hall_scheme.hallid,
                         rownumber=i+1,
-                        seatnumber=j+1,
-                        isoccupied=False
+                        seatnumber=j+1
                     )
                 )
         hall.names = hall_names

@@ -42,5 +42,4 @@ class PositionNameScheme(BaseModel):
 class PositionScheme(BaseModel):
     positionid: uuid.UUID
     names: List[PositionNameScheme]
-    #cast_members: List[CastMemberScheme]
     model_config = {'from_attributes': True}

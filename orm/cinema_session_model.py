@@ -24,3 +24,8 @@ class CinemaSessionModel(Base):
 
     movie: Mapped["MovieModel"] = relationship(back_populates="cinema_sessions", lazy='joined')
     hall: Mapped["HallModel"] = relationship(back_populates="cinema_sessions", lazy='joined')
+
+    seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(
+        "SeatStatusModel", back_populates="cinema_session",
+        cascade="all, delete-orphan", passive_deletes=True
+    )

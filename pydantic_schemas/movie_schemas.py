@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from datetime import timedelta, date
 from pydantic_schemas.country_schemas import CountryScheme
+from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberUpdateScheme
 
 
 class MovieNameScheme(BaseModel):
@@ -36,7 +37,14 @@ class MovieScheme(BaseModel):
     releasedate: date
     countries: List["CountryScheme"]
     genres: List["GenreScheme"]
-    # cast: List["CastMemberScheme"]
+    cast: List["CastMemberUpdateScheme"]
     model_config = {'from_attributes': True}
 
+
+class MovieUpdateScheme(BaseModel):
+    movieid: uuid.UUID
+    durationtime: timedelta
+    agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
+    releasedate: date
+    model_config = {'from_attributes': True}
 

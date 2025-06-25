@@ -53,6 +53,12 @@ class MovieRepository(Repository):
         )
         movie.genres = genres.scalars().unique().all()
 
+        cast_members = await session.execute(
+            select(CastMemberModel)
+            .where(CastMemberModel.memberid.in_([c.memberid for c in movie_scheme.cast]))
+        )
+        movie.cast_members = cast_members.scalars().unique().all()
+
         session.add(movie)
         try:
             await session.commit()
@@ -62,12 +68,18 @@ class MovieRepository(Repository):
         return movie
 
 
-    @classmethod
-    async def update_movie(cls, movie_scheme: MovieScheme):
-        total_rowcount = 0
-        total_rowcount += await cls.update(filters={'movieid': movie_scheme.movieid})
-        total_rowcount += await cls.update_movie_names(movie_scheme=movie_scheme)
-        total_rowcount += await cls.update_movie_countries(movie_scheme=movie_scheme)
+    # @classmethod
+    # @connection
+    # async def update_movie(cls, session: AsyncSession, movie_scheme: MovieScheme):
+    #     # total_rowcount = 0
+    #     # total_rowcount += await cls.update(filters={'movieid': movie_scheme.movieid})
+    #     # total_rowcount += await cls.update_movie_names(movie_scheme=movie_scheme)
+    #     # total_rowcount += await cls.update_movie_countries(movie_scheme=movie_scheme)
+    #
+    #     return cls.update(
+    #         filters={'movieid': movie_scheme.movieid},
+    #         values=movie_scheme.model_dump()
+    #     )
 
 
 

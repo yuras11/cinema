@@ -43,3 +43,10 @@ class PositionScheme(BaseModel):
     positionid: uuid.UUID
     names: List[PositionNameScheme]
     model_config = {'from_attributes': True}
+
+
+class CastMemberUpdateScheme(BaseModel):
+    memberid: uuid.UUID
+    dateofbirth: datetime.date
+    countrycode: str = Field(min_length=2, max_length=2)
+    model_config = {'from_attributes': True}

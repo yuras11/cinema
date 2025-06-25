@@ -2,7 +2,8 @@ import uuid
 
 from fastapi import APIRouter
 
-from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberNameScheme, PositionScheme, PositionNameScheme, CastMemberCreateScheme
+from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberNameScheme, PositionScheme, \
+    PositionNameScheme, CastMemberCreateScheme, CastMemberUpdateScheme
 from service.cast_member_service import CastMemberService
 
 cast_member_router = APIRouter(prefix='/cast_members', tags=["Working with cast members"])
@@ -23,8 +24,9 @@ async def create_cast_member(cast_member_scheme: CastMemberCreateScheme):
 
 
 @cast_member_router.put('/update_cast_member')
-async def update_cast_member(cast_member_scheme: CastMemberScheme):
-    pass
+async def update_cast_member(cast_member_scheme: CastMemberUpdateScheme):
+    result = await CastMemberService.update_cast_member(cast_member_scheme=cast_member_scheme)
+    return {'message': 'Cast member has been successfully updated'} if result else {'message': 'Error'}
 
 
 @cast_member_router.delete('/delete_cast_member')

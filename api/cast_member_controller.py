@@ -18,9 +18,7 @@ async def get_all_cast_members():
 @cast_member_router.post('/create_cast_member')
 async def create_cast_member(cast_member_scheme: CastMemberCreateScheme):
     result = await CastMemberService.create_cast_member(cast_member_scheme=cast_member_scheme)
-    if result:
-        return 'OK'
-    return 'ERROR'
+    return {'message': 'Cast member has been successfully created'} if result else {'message': 'Error'}
 
 
 @cast_member_router.put('/update_cast_member')

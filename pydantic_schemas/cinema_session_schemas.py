@@ -15,6 +15,4 @@ class CinemaSessionScheme(BaseModel):
     sessiontime: datetime.timedelta
     ticketfee: float
     currencycode: str
-    movie: MovieScheme
-    hall: HallScheme
     model_config = {'from_attributes': True}

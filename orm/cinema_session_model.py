@@ -27,5 +27,6 @@ class CinemaSessionModel(Base):
 
     seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(
         "SeatStatusModel", back_populates="cinema_session",
-        cascade="all, delete-orphan", passive_deletes=True
+        cascade="all, delete-orphan", passive_deletes=True,
+        overlaps="seat,seat_statuses"
     )

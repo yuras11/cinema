@@ -16,6 +16,19 @@ async def get_all_cinema_sessions():
     return [cinema_session.model_dump() for cinema_session in [CinemaSessionScheme.model_validate(c) for c in cinema_sessions]]
 
 
-# @cinema_session_router.post('/create_cinema_session')
-# async def create_cinema_session(cinema_session: CinemaSessionScheme):
-#     pass
+@cinema_session_router.post('/create_cinema_session')
+async def create_cinema_session(cinema_session: CinemaSessionScheme):
+    result = await CinemaSessionService.create_cinema_session(cinema_session=cinema_session)
+    return {'message': 'Cinema session has been successfully created'} if result else {'message': 'Error'}
+
+
+@cinema_session_router.put('/update_cinema_session')
+async def update_cinema_session(cinema_session: CinemaSessionScheme):
+    result = await CinemaSessionService.update_cinema_session(cinema_session_scheme=cinema_session)
+    return {'message': 'Cinema session has been successfully updated'} if result else {'message': 'Error'}
+
+
+@cinema_session_router.delete('/delete_cinema_session')
+async def delete_cinema_session(cinema_session: CinemaSessionScheme):
+    result = await CinemaSessionService.delete_cinema_session(cinema_session_scheme=cinema_session)
+    return {'message': 'Cinema session has been successfully updated'} if result else {'message': 'Error'}

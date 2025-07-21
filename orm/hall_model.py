@@ -73,7 +73,7 @@ class SeatStatusModel(Base):
     movieid: Mapped[uuid.UUID]
     hallid: Mapped[uuid.UUID]
     sessiondate: Mapped[datetime.date]
-    sessiontime: Mapped[datetime.time]
+    sessiontime: Mapped[datetime.timedelta]
     rownumber: Mapped[int]
     seatnumber: Mapped[int]
     isoccupied: Mapped[bool] = mapped_column(default=False)

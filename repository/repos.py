@@ -10,10 +10,11 @@ from sqlalchemy.orm import selectinload
 from orm.cast_member_model import CastMemberModel, CastMemberNameModel, PositionModel
 from orm.cinema_session_model import CinemaSessionModel
 from orm.country_model import CountryModel, CountryNameModel
-from orm.hall_model import HallModel, HallNameModel, SeatModel
+from orm.hall_model import HallModel, HallNameModel, SeatModel, SeatStatusModel
 from orm.movie_model import MovieModel, MovieNameModel, GenreModel, movie_countries
 from orm.user_model import UserModel
 from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberCreateScheme
+from pydantic_schemas.cinema_session_schemas import CinemaSessionScheme
 from pydantic_schemas.country_schemas import CountryScheme, CountryNameScheme
 from pydantic_schemas.hall_schemas import HallCreateScheme
 from pydantic_schemas.movie_schemas import MovieScheme
@@ -222,6 +223,44 @@ class CastMemberRepository(Repository):
 
 class CinemaSessionRepository(Repository):
     model = CinemaSessionModel
+
+    @classmethod
+    @connection
+    async def insert(cls, session: AsyncSession, cinema_session_scheme: CinemaSessionScheme):
+        cinema_session = CinemaSessionModel(**cinema_session_scheme.model_dump())
+
+        movie = await session.get(MovieModel, cinema_session.movieid)
+        cinema_session.movie = movie
+
+        hall = await session.execute(
+            select(HallModel)
+            .where(HallModel.hallid == cinema_session.hallid)
+        )
+        cinema_session.hall = hall.scalars().unique().one_or_none()
+
+        seat_statuses = list()
+
+        for seat in cinema_session.hall.seats:
+            seat_status = SeatStatusModel(
+                movieid=cinema_session.movieid,
+                hallid=cinema_session.hallid,
+                sessiondate=cinema_session.sessiondate,
+                sessiontime=cinema_session.sessiontime,
+                rownumber=seat.rownumber,
+                seatnumber=seat.seatnumber,
+                isoccupied=False
+            )
+            seat_statuses.append(seat_status)
+
+        cinema_session.seat_statuses = seat_statuses
+        session.add(cinema_session)
+
+        try:
+            await session.commit()
+        except SQLAlchemyError as e:
+            await session.rollback()
+            raise e
+        return cinema_session
 
 
 class CountryRepository(Repository):

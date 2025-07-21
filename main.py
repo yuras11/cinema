@@ -25,9 +25,10 @@ app.include_router(registration_router)
 
 @app.get('/')
 async def get():
-    movies = await MovieService.get_all_movies()
-    movies_p = [MovieScheme.model_validate(m) for m in movies]
-    return [movie.model_dump()["names"] for movie in movies_p]
+    # movies = await MovieService.get_all_movies()
+    # movies_p = [MovieScheme.model_validate(m) for m in movies]
+    # return [movie.model_dump()["names"] for movie in movies_p]
+    return 'hello'
 
 
 if __name__ == "__main__":

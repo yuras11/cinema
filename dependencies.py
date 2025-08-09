@@ -40,4 +40,5 @@ async def get_current_user(token: str = Depends(get_token)):
 async def get_current_admin_user(current_user: UserModel = Depends(get_current_user)):
     if current_user.userrole:
         return current_user
-    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')
+    return None
+    #raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')

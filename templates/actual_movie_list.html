@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киноафиша</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/styles.css?v=1.0.3">
+</head>
+<body>
+<div class="user-info-wrapper">
+    {% if user %}
+        <span class="user-fullname">{{ user.username }} {{ user.usersurname }}</span>
+    {% endif %}
+    <a href="/auth/profile" class="user-icon" title="Профиль">
+        <i class="fas fa-user"></i>
+    </a>
+</div>
+    <h1>Сегодня в прокате</h1>
+    <div class="movie-grid">
+        {% for movie in movies %}
+        <div class="movie-card">
+            <img src="/static/images/{{ movie.moviephoto }}.webp" alt="Постер фильма">
+            <div class="details">
+                <h2>{{ movie.names[0].moviename }}</h2>
+                <p>Длительность: {{ movie.durationtime }}</p>
+                <p>Дата выхода: {{ movie.releasedate }}</p>
+                <p>Возрастной рейтинг: {{ movie.agerate }}</p>
+                <a href="/movies/all/{{movie.movieid}}">Посмотреть сеансы</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

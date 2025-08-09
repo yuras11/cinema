@@ -6,13 +6,18 @@ from typing import List
 from pydantic_schemas.user_schemas import UserScheme
 from service.user_service import UserService
 
-user_router = APIRouter(prefix='/users', tags=["Working with users"])
+user_router = APIRouter(prefix='/cinema_users', tags=["Working with users"])
 
-@user_router.get('/user_by_login', response_model=List[UserScheme])
-async def get_user_by_login(userlogin: str):
-    users = await UserService.get_user_by_login(login=userlogin)
-    users_p = [UserScheme.model_validate(u) for u in users]
-    return [u_p.model_dump() for u_p in users_p]
+# @user_router.get('/{userlogin}')
+# async def get_user_by_login(userlogin: str):
+#     users = await UserService.get_user_by_login(userlogin=userlogin)
+#     return users[0] if users else None
+
+
+@user_router.get('/get_all_users')
+async def get_all_users():
+    users = await UserService.get_all_users()
+    return users
 
 
 @user_router.post('/add_user')
@@ -32,10 +37,10 @@ async def update_user(user: UserScheme):
 
 
 @user_router.delete('/delete_user')
-async def delete_user(user: UserScheme):
-    result = await UserService.delete_user(userid=user.userid)
+async def delete_user(userid: str):
+    result = await UserService.delete_user(userid=userid)
     if result:
-        return f"User {user.userlogin} is successfully deleted"
+        return {'message': "User is successfully deleted"}
     return "Failed to delete user"
 
 

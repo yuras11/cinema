@@ -24,7 +24,6 @@ class GenreNameScheme(BaseModel):
 
 class GenreScheme(BaseModel):
     genreid: uuid.UUID
-    model_config = {'from_attributes': True}
     names: List["GenreNameScheme"]
     model_config = {'from_attributes': True}
 
@@ -47,4 +46,3 @@ class MovieUpdateScheme(BaseModel):
     agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
     releasedate: date
     model_config = {'from_attributes': True}
-

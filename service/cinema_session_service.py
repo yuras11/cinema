@@ -13,6 +13,11 @@ class CinemaSessionService:
 
 
     @classmethod
+    async def get_todays_billboard(cls):
+        return await CinemaSessionRepository.find(sessiondate=datetime.date.today())
+
+
+    @classmethod
     async def get_cinema_sessions_by_date(cls, sessiondate: datetime.date):
         return await CinemaSessionRepository.find(sessiondate=sessiondate)
 

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киноафиша</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/styles.css?v=1.0.3">
+</head>
+<body>
+<div class="user-info-wrapper">
+    {% if user %}
+        <span class="user-fullname">{{ user.username }} {{ user.usersurname }}</span>
+    {% endif %}
+    <a href="/auth/profile" class="user-icon" title="Профиль">
+        <i class="fas fa-user"></i>
+    </a>
+</div>
+    <h1>Список сеансов</h1>
+    <div class="movie-grid">
+        {% for cinema_session in cinema_sessions %}
+        <div class="movie-card">
+            <img src="/static/images/{{ cinema_session.movie.moviephoto }}.webp" alt="Постер фильма">
+            <div class="details">
+                <h2>{{ cinema_session.movie.names[0].moviename }}</h2>
+                <p>Зал: {{ cinema_session.hall.names[0].hallname }}</p>
+                <p>Дата: {{ cinema_session.sessiondate }}</p>
+                <p>Время: {{ cinema_session.sessiontime }}</p>
+                <a href="/sessions/{{ cinema_session.sessionid }}">Купить билет</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

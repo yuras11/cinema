@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    padding: 30px 0 10px;
+    font-size: 32px;
+    color: #222;
+}
+
+/* Сетка карточек */
+.movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+/* Карточка фильма */
+.movie-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Картинка */
+.movie-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Детали */
+.movie-card .details {
+    padding: 20px;
+    text-align: center;
+}
+
+.movie-card .details h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+.movie-card .details p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Кнопка */
+.movie-card a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #ff4d4f;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.movie-card a:hover {
+    background-color: #d9363e;
+}
+
+.user-info-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+}
+
+.user-fullname {
+    margin-right: 10px;
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
+    color: #555; /* тот же цвет, что у иконки */
+    white-space: nowrap;
+}
+
+.user-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 22px;
+    transition: background-color 0.3s ease;
+}
+
+.user-icon:hover {
+    background-color: #0056b3;
+    color: #fff;
+}

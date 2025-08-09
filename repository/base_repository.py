@@ -82,8 +82,9 @@ class Repository:
             .where(*[getattr(cls.model, key) == value for key, value in keys.items()])
         )
         result = await session.execute(stmt)
-        record = result.scalar_one_or_none()
+        record = result.unique().scalar_one_or_none()
         return record
+
 
     @classmethod
     @connection

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.names[0].moviename }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/movie.css?v=1.0.0">
+</head>
+<body>
+    <!-- Шапка с иконкой пользователя -->
+    <div class="user-info-wrapper">
+        <span class="user-fullname">
+            {% if user %}
+                {{ user.username }} {{ user.usersurname }}
+            {% endif %}
+        </span>
+        <a href="/auth/profile" class="user-icon" title="Профиль">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+
+    <main class="movie-container">
+        <!-- Левая колонка: постер -->
+        <div class="movie-poster">
+            <img src="/static/images/{{ movie.moviephoto }}.webp" alt="Постер фильма">
+        </div>
+
+        <!-- Правая колонка: информация -->
+        <div class="movie-details">
+            <h1 class="movie-title">{{ movie.names[0].moviename }}</h1>
+            <p><strong>Длительность:</strong> {{ movie.durationtime }}</p>
+            <p><strong>Дата выхода:</strong> {{ movie.releasedate }}</p>
+            <p><strong>Возрастной рейтинг:</strong> {{ movie.agerate }}</p>
+        </div>
+    </main>
+
+    <!-- Сеансы -->
+    <section class="sessions-section">
+        <h2>Сеансы</h2>
+        {% for date, sessions in cinema_sessions_by_date.items() %}
+        <div class="session-date-row">
+            <h3>{{ date }}</h3>
+            <div class="session-cards">
+              {% for cinema_session in sessions %}
+                <div class="session-card">
+                    <p><strong>Время:</strong> {{ cinema_session.sessiontime }}</p>
+                    <p><strong>Зал:</strong> {{ cinema_session.hall.names[0].hallname }}</p>
+                    <p><strong>Цена:</strong> {{ cinema_session.ticketfee }} {{ cinema_session.currencycode }}</p>
+                    <a href="/" class="buy-btn">Забронировать билет</a>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <p>Нет доступных сеансов.</p>
+        {% endfor %}
+    </section>
+</body>
+</html>

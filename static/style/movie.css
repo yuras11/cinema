@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f8fa;
+    color: #333;
+}
+
+/* --- Шапка --- */
+.user-info-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+}
+
+.user-fullname {
+    margin-right: 10px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    white-space: nowrap;
+}
+
+.user-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 22px;
+    transition: background-color 0.3s ease;
+}
+
+.user-icon:hover {
+    background-color: #0056b3;
+}
+
+/* --- Основной блок фильма --- */
+.movie-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    padding: 0 20px;
+}
+
+.movie-poster {
+    flex: 1;
+}
+
+.movie-poster img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.movie-details {
+    flex: 2;
+}
+
+.movie-title {
+    margin-top: 0;
+    font-size: 2.2rem;
+    color: #222;
+}
+
+/* --- Сеансы --- */
+.sessions-section {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.session-date-row {
+    margin-bottom: 25px;
+}
+
+.session-cards {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.session-card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 200px;
+    text-align: center;
+}
+
+.buy-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #ff4d4f;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buy-btn:hover {
+    background-color: #d9363e;
+}
+
+
+.user-info-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+}
+
+.user-fullname {
+    margin-right: 10px;
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
+    color: #555; /* тот же цвет, что у иконки */
+    white-space: nowrap;
+}
+
+.user-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 22px;
+    transition: background-color 0.3s ease;
+}
+
+.user-icon:hover {
+    background-color: #0056b3;
+    color: #fff;
+}

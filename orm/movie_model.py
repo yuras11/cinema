@@ -1,4 +1,4 @@
-from sqlalchemy import String, PrimaryKeyConstraint, Boolean, Integer, ForeignKey, Date, Table, Column
+from sqlalchemy import String, PrimaryKeyConstraint, Boolean, Integer, ForeignKey, Date, Table, Column, Text
 from orm.base_model import Base
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
@@ -68,6 +68,7 @@ class MovieModel(Base):
     durationtime: Mapped[timedelta] = mapped_column(Interval)
     releasedate: Mapped[date] = mapped_column(Date)
     agerate: Mapped[str] = mapped_column(String(3))
+    moviephoto: Mapped[str] = mapped_column(Text, nullable=True)
 
     names: Mapped[List["MovieNameModel"]] = relationship(
         back_populates="movie",
@@ -107,36 +108,3 @@ class MovieNameModel(Base):
     moviename: Mapped[str] = mapped_column(String(50))
 
     movie: Mapped["MovieModel"] = relationship(back_populates="names")
-
-
-# class MovieCountryModel(Base):
-#     __tablename__ = "movie_countries"
-#     __table_args__ = (PrimaryKeyConstraint('movieid', 'countrycode'),)
-#
-#     movieid: Mapped[uuid.UUID] = mapped_column(ForeignKey(MovieModel.movieid))
-#     countrycode: Mapped[str] = mapped_column(ForeignKey(CountryModel.countrycode))
-#
-#     movies: Mapped[List["MovieModel"]] = relationship(back_populates="countries")
-#     countries: Mapped[List["CountryModel"]] = relationship(back_populates="movies")
-#
-#
-# class MovieCastModel(Base):
-#     __tablename__ = "movie_cast"
-#     __table_args__ = (PrimaryKeyConstraint('movieid', 'memberid'),)
-#
-#     movieid: Mapped[uuid.UUID] = mapped_column(ForeignKey(MovieModel.movieid))
-#     memberid: Mapped[uuid.UUID] = mapped_column(ForeignKey(CastMemberModel.memberid))
-#
-#     movies: Mapped[List["MovieModel"]] = relationship(back_populates="cast_members")
-#     cast_members: Mapped[List["CastMemberModel"]] = relationship(back_populates="movies")
-
-
-# class MovieGenreModel(Base):
-#     __tablename__ = "movie_genres"
-#     __table_args__ = (PrimaryKeyConstraint('movieid', 'genreid'),)
-#
-#     movieid: Mapped[uuid.UUID] = mapped_column(ForeignKey(MovieModel.movieid))
-#     genreid: Mapped[uuid.UUID] = mapped_column(ForeignKey(GenreModel.genreid))
-#
-#     movies: Mapped[List["MovieModel"]] = relationship(back_populates="genres")
-#     genres: Mapped[List["GenreModel"]] = relationship(back_populates="movies")

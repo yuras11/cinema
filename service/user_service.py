@@ -1,9 +1,3 @@
-from sqlalchemy.util import await_only
-
-from repository.database import connection
-import asyncio
-
-from pydantic_schemas.user_schemas import UserScheme
 from repository.repos import UserRepository
 from uuid import UUID
 

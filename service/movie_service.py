@@ -14,7 +14,7 @@ class MovieService:
         return await MovieRepository.get_all()
 
     @classmethod
-    async def get_movie_by_id(cls, movieid: str):
+    async def get_movie_by_id(cls, movieid: int):
         return await MovieRepository.get_by_primary_key(movieid=movieid)
 
 
@@ -46,21 +46,19 @@ class MovieService:
 
         return cinema_sessions_by_date
 
+
     @classmethod
     async def create_movie(cls, movie_scheme: MovieScheme):
-        return await MovieRepository.insert(movie_scheme=movie_scheme)
+        return await MovieRepository.create_movie(movie_scheme=movie_scheme)
 
 
     @classmethod
     async def update_movie(cls, movie_scheme: MovieUpdateScheme):
-        return await MovieRepository.update(
-            filters={'movieid': movie_scheme.movieid},
-            values=movie_scheme.model_dump()
-        )
+        return await MovieRepository.update_movie(movie_scheme=movie_scheme)
 
 
     @classmethod
-    async def delete_movie(cls, movieid: uuid.UUID):
+    async def delete_movie(cls, movieid: int):
         return await MovieRepository.delete(movieid=movieid)
 
 

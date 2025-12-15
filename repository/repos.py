@@ -2,28 +2,34 @@ from http.client import HTTPException
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, join, update, delete
-from typing import List
+from sqlalchemy import select, delete
 
-from sqlalchemy.orm import selectinload
 
-from orm.cast_member_model import CastMemberModel, CastMemberNameModel, PositionModel
+from orm.cast_member_model import CastMemberModel, ProfessionModel
 from orm.cinema_session_model import CinemaSessionModel
-from orm.country_model import CountryModel, CountryNameModel
-from orm.hall_model import HallModel, HallNameModel, SeatModel, SeatStatusModel
-from orm.movie_model import MovieModel, MovieNameModel, GenreModel, movie_countries
+from orm.country_model import CountryModel
+from orm.hall_model import HallModel, SeatModel, SeatStatusModel
+from orm.movie_model import MovieModel, GenreModel, movie_countries
 from orm.user_model import UserModel
-from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberCreateScheme
-from pydantic_schemas.cinema_session_schemas import CinemaSessionScheme
-from pydantic_schemas.country_schemas import CountryScheme, CountryNameScheme
-from pydantic_schemas.hall_schemas import HallCreateScheme
-from pydantic_schemas.movie_schemas import MovieScheme
+from pydantic_schemas.cast_member_schemas import CastMemberCreateScheme
+from pydantic_schemas.cinema_session_schemas import CinemaSessionCreateScheme, CinemaSessionUpdateScheme
+from pydantic_schemas.country_schemas import CountryScheme
+from pydantic_schemas.hall_schemas import HallCreateScheme, HallUpdateScheme
+from pydantic_schemas.movie_schemas import MovieScheme, MovieUpdateScheme
 from repository.base_repository import Repository
 from repository.database import connection
 
 
+class CountryRepository(Repository):
+    model = CountryModel
+
+
 class UserRepository(Repository):
     model = UserModel
+
+
+class CastMemberRepository(Repository):
+    model = CastMemberModel
 
 
 class MovieRepository(Repository):
@@ -31,34 +37,27 @@ class MovieRepository(Repository):
 
     @classmethod
     @connection
-    async def insert(cls, session: AsyncSession, movie_scheme: MovieScheme):
+    async def create_movie(cls, session: AsyncSession, movie_scheme: MovieScheme):
         movie = MovieModel(
-            movieid=movie_scheme.movieid,
-            agerate=movie_scheme.agerate,
+            moviename=movie_scheme.moviename,
             durationtime=movie_scheme.durationtime,
-            releasedate=movie_scheme.releasedate
+            releaseyear=movie_scheme.releaseyear,
+            agerate=movie_scheme.agerate
         )
-
-        movie_names = [MovieNameModel(**m.model_dump()) for m in movie_scheme.names]
-        movie.names = movie_names
-
-        countries = await session.execute(
-            select(CountryModel)
-            .where(CountryModel.countrycode.in_([c.countrycode for c in movie_scheme.countries]))
-        )
-        movie.countries = countries.scalars().unique().all()
 
         genres = await session.execute(
-            select(GenreModel)
-            .where(GenreModel.genreid.in_([g.genreid for g in movie_scheme.genres]))
+            select(GenreModel).where(GenreModel.genreid.in_(movie_scheme.genres))
         )
-        movie.genres = genres.scalars().unique().all()
-
+        countries = await session.execute(
+            select(CountryModel).where(CountryModel.countrycode.in_(movie_scheme.countries))
+        )
         cast_members = await session.execute(
-            select(CastMemberModel)
-            .where(CastMemberModel.memberid.in_([c.memberid for c in movie_scheme.cast]))
+            select(CastMemberModel).where(CastMemberModel.memberid.in_(movie_scheme.cast))
         )
-        movie.cast_members = cast_members.scalars().unique().all()
+
+        movie.genres = list(genres.scalars().unique().all())
+        movie.countries = list(countries.scalars().unique().all())
+        movie.cast_members = list(cast_members.scalars().unique().all())
 
         session.add(movie)
         try:
@@ -68,87 +67,44 @@ class MovieRepository(Repository):
             raise e
         return movie
 
-
-    # @classmethod
-    # @connection
-    # async def update_movie(cls, session: AsyncSession, movie_scheme: MovieScheme):
-    #     # total_rowcount = 0
-    #     # total_rowcount += await cls.update(filters={'movieid': movie_scheme.movieid})
-    #     # total_rowcount += await cls.update_movie_names(movie_scheme=movie_scheme)
-    #     # total_rowcount += await cls.update_movie_countries(movie_scheme=movie_scheme)
-    #
-    #     return cls.update(
-    #         filters={'movieid': movie_scheme.movieid},
-    #         values=movie_scheme.model_dump()
-    #     )
-
-
-
-
     @classmethod
     @connection
-    async def update_movie_names(cls, session: AsyncSession, movie_scheme: MovieScheme):
-        statements = []
-        for name in movie_scheme.names:
-            stmt = (
-                update(MovieNameModel)
-                .where(MovieNameModel.movieid==name.movieid, MovieNameModel.languagecode==name.languagecode)
-                .values(moviename=name.moviename)
-                .execution_options(synchronize_session="fetch")
+    async def update_movie(cls, session: AsyncSession, movie_scheme: MovieUpdateScheme):
+        result = await session.execute(
+            select(MovieModel).where(MovieModel.movieid==movie_scheme.movieid)
+        )
+
+        movie = result.unique().scalar_one_or_none()
+
+        if movie is None:
+            return None
+
+        movie.moviename = movie_scheme.moviename
+        movie.agerate = movie_scheme.agerate
+        movie.durationtime = movie_scheme.durationtime
+        movie.releaseyear = movie_scheme.releaseyear
+
+        if movie_scheme.genres is not None:
+            genres = await session.execute(
+                select(GenreModel).where(GenreModel.genreid.in_(movie_scheme.genres))
             )
-            statements.append(stmt)
-        try:
-            rowcount = 0
-            for stmt in statements:
-                result = await session.execute(stmt)
-                rowcount += result.rowcount
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return rowcount
+            movie.genres = list(genres.scalars().unique().all())
 
-
-    @classmethod
-    @connection
-    async def update_movie_countries(cls, session: AsyncSession, movie_scheme: MovieScheme):
-        movie = await session.get(MovieModel, movie_scheme.movieid, options=[selectinload(MovieModel.countries)])
-        if not movie:
-            raise ValueError("Movie not found")
-
-        current_country_codes = {country.countrycode for country in movie.countries}
-        new_country_codes = {country.countrycode for country in movie_scheme.countries}
-
-        country_codes_to_add = new_country_codes - current_country_codes
-        country_codes_to_remove = current_country_codes - new_country_codes
-
-        rowcount_to_return = 0
-
-        if country_codes_to_remove:
-            stmt = (
-                delete(movie_countries)
-                .where(
-                    movie_countries.c.movieid == movie_scheme.movieid,
-                    movie_countries.c.countrycode.in_(country_codes_to_remove)
-                )
+        if movie_scheme.countries is not None:
+            countries = await session.execute(
+                select(CountryModel).where(CountryModel.countrycode.in_(movie_scheme.countries))
             )
-            result = await session.execute(stmt)
-            rowcount_to_return += result.rowcount
+            movie.countries = list(countries.scalars().unique().all())
 
-        if country_codes_to_add:
-            countries_to_add = await session.execute(
-                select(CountryModel).where(CountryModel.countrycode.in_(country_codes_to_add))
+        if movie_scheme.cast is not None:
+            cast_members = await session.execute(
+                select(CastMemberModel).where(CastMemberModel.memberid.in_(movie_scheme.cast))
             )
-            for country in countries_to_add:
-                movie.countries.append(country)
-                rowcount_to_return += 1
+            movie.cast_members = list(cast_members.scalars().unique().all())
 
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return rowcount_to_return
+        await session.commit()
+        await session.refresh(movie)
+        return movie
 
 
 class HallRepository(Repository):
@@ -156,69 +112,59 @@ class HallRepository(Repository):
 
     @classmethod
     @connection
-    async def insert(cls, session: AsyncSession, hall_scheme: HallCreateScheme):
-        hall = HallModel(hallid=hall_scheme.hallid)
-        hall_names = [HallNameModel(**h.model_dump()) for h in hall_scheme.names]
-        seats = []
-        for i in range(hall_scheme.row_amount):
-            for j in range(hall_scheme.seat_amount // hall_scheme.row_amount):
-                seats.append(
-                    SeatModel(
-                        hallid=hall_scheme.hallid,
-                        rownumber=i+1,
-                        seatnumber=j+1
-                    )
-                )
-        hall.names = hall_names
-        hall.seats = seats
+    async def create_hall(cls, session: AsyncSession, hall_scheme: HallCreateScheme):
+        hall = HallModel(**hall_scheme.model_dump())
         session.add(hall)
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
+        await session.flush() # this is for getting hall's id before commiting to DB
+
+        for row in range(hall_scheme.rowamount):
+            for seat in range(hall_scheme.seatamount):
+                seat_model = SeatModel(
+                    hallid = hall.hallid,
+                    rownumber = row + 1,
+                    seatnumber = seat + 1
+                )
+                session.add(seat_model)
+
+        await session.commit()
         return hall
 
 
-class CastMemberRepository(Repository):
-    model = CastMemberModel
-
     @classmethod
     @connection
-    async def insert(cls, session: AsyncSession, cast_member_scheme: CastMemberCreateScheme):
-        cast_member = CastMemberModel(
-            memberid=cast_member_scheme.memberid,
-            dateofbirth=cast_member_scheme.dateofbirth,
-            countrycode=cast_member_scheme.countrycode
+    async def update_hall(cls, session: AsyncSession, hall_scheme: HallUpdateScheme):
+        result = await session.execute(
+            select(HallModel).where(HallModel.hallid==hall_scheme.hallid)
         )
+        hall = result.unique().scalar_one_or_none()
 
-        cast_member_country = await session.get(CountryModel, cast_member_scheme.countrycode)
-        cast_member.country = cast_member_country
-        cast_member.countrycode = cast_member_scheme.countrycode
+        if hall is None:
+            return None
 
-        cast_member_names = [
-            CastMemberNameModel(
-                memberid=name.memberid,
-                languagecode=name.languagecode,
-                membername=name.membername
+        hall.hallname = hall_scheme.hallname
+
+        rows_changed = hall.rowamount != hall_scheme.rowamount
+        seats_changed = hall.seatamount != hall_scheme.seatamount
+
+        if rows_changed or seats_changed:
+            hall.rowamount = hall_scheme.rowamount
+            hall.seatamount = hall_scheme.seatamount
+
+            await session.execute(
+                delete(SeatModel).where(SeatModel.hallid == hall.hallid)
             )
-            for name in cast_member_scheme.names
-        ]
-        cast_member.names = cast_member_names
 
-        res = await session.execute(
-            select(PositionModel).where(PositionModel.positionid.in_([pos.positionid for pos in cast_member_scheme.positions]))
-        )
-        cast_member_positions = res.scalars().unique().all()
-        cast_member.positions = cast_member_positions
+            for row in range(hall_scheme.rowamount):
+                for seat in range(hall_scheme.seatamount):
+                    seat_model = SeatModel(
+                        hallid=hall.hallid,
+                        rownumber=row + 1,
+                        seatnumber=seat + 1
+                    )
+                    session.add(seat_model)
 
-        session.add(cast_member)
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return cast_member
+        await session.commit()
+        return hall
 
 
 class CinemaSessionRepository(Repository):
@@ -226,97 +172,74 @@ class CinemaSessionRepository(Repository):
 
     @classmethod
     @connection
-    async def insert(cls, session: AsyncSession, cinema_session_scheme: CinemaSessionScheme):
-        cinema_session = CinemaSessionModel(**cinema_session_scheme.model_dump())
-
-        movie = await session.get(MovieModel, cinema_session.movieid)
-        cinema_session.movie = movie
-
-        hall = await session.execute(
-            select(HallModel)
-            .where(HallModel.hallid == cinema_session.hallid)
+    async def create_cinema_session(cls, session: AsyncSession, session_scheme: CinemaSessionCreateScheme):
+        cinema_session = CinemaSessionModel(**session_scheme.model_dump())
+        result = await session.execute(
+            select(HallModel).where(HallModel.hallid==cinema_session.hallid)
         )
-        cinema_session.hall = hall.scalars().unique().one_or_none()
-
-        seat_statuses = list()
-
-        for seat in cinema_session.hall.seats:
-            seat_status = SeatStatusModel(
-                movieid=cinema_session.movieid,
-                hallid=cinema_session.hallid,
-                sessiondate=cinema_session.sessiondate,
-                sessiontime=cinema_session.sessiontime,
-                rownumber=seat.rownumber,
-                seatnumber=seat.seatnumber,
-                isoccupied=False
-            )
-            seat_statuses.append(seat_status)
-
-        cinema_session.seat_statuses = seat_statuses
+        cinema_session.hall = result.unique().scalar_one_or_none()
         session.add(cinema_session)
+        await session.flush()
 
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
+        for row in range(1, cinema_session.hall.rowamount + 1):
+            for seat in range(1, cinema_session.hall.seatamount + 1):
+                seat_status = SeatStatusModel(
+                    sessionid=cinema_session.sessionid,
+                    hallid=cinema_session.hallid,
+                    rownumber=row,
+                    seatnumber=seat
+                )
+                session.add(seat_status)
+
+        await session.commit()
+        return cinema_session
+        
+
+    @classmethod
+    @connection
+    async def update_cinema_session(cls, session: AsyncSession, session_scheme: CinemaSessionUpdateScheme):
+        result = await session.execute(
+            select(CinemaSessionModel).where(CinemaSessionModel.sessionid==session_scheme.sessionid)
+        )
+        cinema_session = result.unique().scalar_one_or_none()
+
+        if cinema_session is None:
+            return None
+
+        result = await session.execute(
+            select(HallModel).where(HallModel.hallid == cinema_session.hallid)
+        )
+        cinema_session.hall = result.unique().scalar_one_or_none()
+
+        result = await session.execute(
+            select(HallModel).where(HallModel.hallid == session_scheme.hallid)
+        )
+        hall = result.unique().scalar_one_or_none()
+
+        await session.execute(
+            delete(SeatStatusModel).where(
+                SeatStatusModel.hallid == cinema_session.hallid,
+                SeatStatusModel.sessionid == cinema_session.sessionid
+            )
+        )
+
+        cinema_session.movieid = session_scheme.movieid
+        cinema_session.hallid = session_scheme.hallid
+        cinema_session.sessiondate = session_scheme.sessiondate
+        cinema_session.sessiontime = session_scheme.sessiontime
+        cinema_session.ticketfee = session_scheme.ticketfee
+        cinema_session.currencycode = session_scheme.currencycode
+
+        for row in range(1, hall.rowamount + 1):
+            for seat in range(1, hall.seatamount + 1):
+                seat_status = SeatStatusModel(
+                    sessionid=session_scheme.sessionid,
+                    hallid=session_scheme.hallid,
+                    rownumber=row,
+                    seatnumber=seat
+                )
+                session.add(seat_status)
+
+        await session.commit()
         return cinema_session
 
-
-class CountryRepository(Repository):
-    model = CountryModel
-
-    @classmethod
-    @connection
-    async def insert(cls, session: AsyncSession, country_model: CountryScheme):
-        country = CountryModel(countrycode=country_model.countrycode)
-        country.names = [CountryNameModel(**name.model_dump()) for name in country_model.names]
-        session.add(country)
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return country
-
-
-    @classmethod
-    @connection
-    async def update_name(cls, session: AsyncSession, country_name_scheme: CountryNameScheme):
-        stmt = (
-            update(CountryNameModel)
-            .where(CountryNameModel.countrycode == country_name_scheme.countrycode,
-                   CountryNameModel.languagecode == country_name_scheme.languagecode)
-            .values(countryname=country_name_scheme.countryname)
-        )
-
-        result = await session.execute(stmt)
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return result.rowcount
-
-
-    @classmethod
-    @connection
-    async def add_name(cls, session: AsyncSession, country_name: CountryNameScheme):
-        country = await session.get(CountryModel, country_name.countrycode)
-        if not country:
-            raise HTTPException(status_code=404, detail='Country not found')
-        existing_name = await session.get(
-            CountryNameModel,
-            (country_name.countrycode, country_name.languagecode)
-        )
-        if existing_name:
-            raise HTTPException(status_code=409, detail='Such name already exists')
-
-        country_name_model = CountryNameModel(**country_name.model_dump())
-        session.add(country_name_model)
-        try:
-            await session.commit()
-        except SQLAlchemyError as e:
-            await session.rollback()
-            raise e
-        return country_name_model

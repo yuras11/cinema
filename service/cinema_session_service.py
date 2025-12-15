@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic_schemas.cinema_session_schemas import CinemaSessionScheme
+from pydantic_schemas.cinema_session_schemas import CinemaSessionCreateScheme, CinemaSessionUpdateScheme
 from repository.repos import CinemaSessionRepository
 from repository.database import connection
 import asyncio
@@ -23,23 +23,15 @@ class CinemaSessionService:
 
 
     @classmethod
-    async def create_cinema_session(cls, cinema_session: CinemaSessionScheme):
-        return await CinemaSessionRepository.insert(cinema_session_scheme=cinema_session)
+    async def create_cinema_session(cls, session_scheme: CinemaSessionCreateScheme):
+        return await CinemaSessionRepository.create_cinema_session(session_scheme=session_scheme)
 
 
     @classmethod
-    async def update_cinema_session(cls, cinema_session_scheme: CinemaSessionScheme):
-        return await CinemaSessionRepository.update(
-            filters={
-                'movieid': cinema_session_scheme.movieid,
-                'hallid': cinema_session_scheme.hallid,
-                'sessiondate': cinema_session_scheme.sessiondate,
-                'sessiontime': cinema_session_scheme.sessiontime
-            },
-            values=cinema_session_scheme.model_dump()
-        )
+    async def update_cinema_session(cls, session_scheme: CinemaSessionUpdateScheme):
+        return await CinemaSessionRepository.update_cinema_session(session_scheme=session_scheme)
 
 
     @classmethod
-    async def delete_cinema_session(cls, cinema_session_scheme: CinemaSessionScheme):
-        return await CinemaSessionRepository.delete(**cinema_session_scheme.model_dump())
+    async def delete_cinema_session(cls, sessionid: int):
+        return await CinemaSessionRepository.delete(sessionid=sessionid)

@@ -13,10 +13,10 @@ import uuid
 
 class CinemaSessionModel(Base):
     __tablename__ = "cinema_session"
-    __table_args__ = (PrimaryKeyConstraint("movieid", "hallid", "sessiondate", "sessiontime"),)
 
-    movieid: Mapped[uuid.UUID] = mapped_column(ForeignKey(MovieModel.movieid))
-    hallid: Mapped[uuid.UUID] = mapped_column(ForeignKey(HallModel.hallid, ondelete='CASCADE'))
+    sessionid: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    movieid: Mapped[int] = mapped_column(ForeignKey(MovieModel.movieid))
+    hallid: Mapped[int] = mapped_column(ForeignKey(HallModel.hallid, ondelete='CASCADE'))
     sessiondate: Mapped[date] = mapped_column(Date)
     sessiontime: Mapped[timedelta] = mapped_column(Interval)
     ticketfee: Mapped[float] = mapped_column(Numeric)
@@ -28,5 +28,5 @@ class CinemaSessionModel(Base):
     seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(
         "SeatStatusModel", back_populates="cinema_session",
         cascade="all, delete-orphan", passive_deletes=True,
-        overlaps="seat,seat_statuses"
+        overlaps="seat,seat_statuses", lazy='joined'
     )

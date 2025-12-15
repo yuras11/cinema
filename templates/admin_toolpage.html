@@ -1,10 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Основная страница администратора</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin toolbar</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/admin.css">
 </head>
 <body>
 
+    <!-- Кнопка "Назад" -->
+    <div class="top-bar">
+        <a href="javascript:history.back()" class="back-link">← Back</a>
+    </div>
+
+    <!-- Блок информации о пользователе -->
+    <section class="user-info-section">
+        <div class="user-container">
+            <!-- Левая колонка: фото -->
+            <div class="user-photo">
+                <img src="/static/images/{{ user.userphoto }}.webp" alt="Photo">
+            </div>
+
+            <!-- Правая колонка: информация -->
+            <div class="user-details">
+                <h1 class="user-title">{{ user.username }} {{ user.usersurname }}</h1>
+                <p><strong>Login:</strong> {{ user.userlogin }}</p>
+                <p><strong>Email:</strong> {{ user.useremail }}</p>
+                <p><strong>Registered:</strong> {{ user.created_at }}</p>
+                <a href="#" id="logout-button" class="logout-btn" onclick="logoutFunction(event)">Log out</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Инструменты администратора -->
+    <section class="sessions-section">
+        <h2>Admin tools</h2>
+
+        <div class="router-group">
+            <h3>Sessions</h3>
+            <div class="button-group">
+                <a href="/cinema_sessions/create" class="admin-btn">Create</a>
+                <a href="/cinema_sessions/update" class="admin-btn">Update</a>
+                <a href="/cinema_sessions/delete" class="admin-btn delete">Delete</a>
+                <a href="/cinema_sessions/all" class="admin-btn">All sessions</a>
+            </div>
+        </div>
+
+        <div class="router-group">
+            <h3>Movies</h3>
+            <div class="button-group">
+                <a href="/movies/create" class="admin-btn">Create</a>
+                <a href="/movies/update" class="admin-btn">Update</a>
+                <a href="/movies/delete" class="admin-btn delete">Delete</a>
+                <a href="/movies/all" class="admin-btn">All movies</a>
+            </div>
+        </div>
+
+        <div class="router-group">
+            <h3>Users</h3>
+            <div class="button-group">
+                <a href="/users/create" class="admin-btn">Create</a>
+                <a href="/users/update" class="admin-btn">Update</a>
+                <a href="/users/delete" class="admin-btn delete">Delete</a>
+                <a href="/users/all" class="admin-btn">All users</a>
+            </div>
+        </div>
+
+        <div class="router-group">
+            <h3>Halls</h3>
+            <div class="button-group">
+                <a href="/halls/create" class="admin-btn">Create</a>
+                <a href="/halls/update" class="admin-btn">Update</a>
+                <a href="/halls/delete" class="admin-btn delete">Delete</a>
+                <a href="/halls/all" class="admin-btn">All halls</a>
+            </div>
+        </div>
+
+        <div class="router-group">
+            <h3>Cast members</h3>
+            <div class="button-group">
+                <a href="/cast_members/create" class="admin-btn">Create</a>
+                <a href="/cast_members/update" class="admin-btn">Update</a>
+                <a href="/cast_members/delete" class="admin-btn delete">Delete</a>
+                <a href="/cast_members/all" class="admin-btn">All cast members</a>
+            </div>
+        </div>
+    </section>
+
+<script src="/static/js/script.js"></script>
 </body>
 </html>

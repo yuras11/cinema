@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie update</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/entity_creation.css">
+</head>
+<body>
+<div class="container">
+    <h1>Update</h1>
+    <form id="entity-form" class="entity-form">
+        <label for="movieid">Movie id:</label>
+        <input type="text" id="movieid" name="movieid" required>
+
+        <label for="moviename">Movie name:</label>
+        <input type="text" id="moviename" name="moviename" required>
+
+        <label for="durationtime">Duration time:</label>
+        <input type="text" id="durationtime" name="durationtime" required>
+
+        <label for="agerate">Age rate:</label>
+        <input type="text" id="agerate" name="agerate" required>
+
+        <label for="releaseyear">Release year:</label>
+        <input type="text" id="releaseyear" name="releaseyear" required>
+
+        <label for="genres">Genres:</label>
+        <input type="text" id="genres" name="genres" required>
+
+        <label for="cast">Cast members:</label>
+        <input type="text" id="cast" name="cast" required>
+
+        <label for="countries">Countries:</label>
+        <input type="text" id="countries" name="countries" required>
+
+        <button type="button" id="reg-button" class="submit-button" onclick="updateFunction(event)">Update</button>    </form>
+</div>
+
+<!-- Подключаем внешний JavaScript-файл -->
+<script>
+    const ENTITY = "movies";
+</script>
+<script src="/static/js/create_update_script.js?v=123"></script>
+</body>
+</html>

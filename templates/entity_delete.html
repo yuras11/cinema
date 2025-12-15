@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{entity}} delete</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/entity_creation.css">
+</head>
+<body>
+<div class="container">
+    <h1>{{entity}} delete</h1>
+    <form id="entity-form" class="entity-form">
+        <label for="entityid">{{entity[:-1]}} id:</label>
+        <input type="text" id="entityid" name="entityid" required>
+
+        <button type="button" id="reg-button" class="submit-button" onclick="deleteFunction(event)">Delete</button>    </form>
+</div>
+
+<!-- Подключаем внешний JavaScript-файл -->
+<script>
+    const ENTITY = "{{ entity }}";
+</script>
+<script src="/static/js/del_script.js?v=123"></script>
+</body>
+</html>

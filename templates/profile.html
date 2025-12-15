@@ -18,35 +18,35 @@
         <div class="user-container">
             <!-- Левая колонка: фото -->
             <div class="user-photo">
-                <img src="/static/images/{{ user.userphoto }}.webp" alt="Фотография пользователя">
+                <img src="/static/images/{{ user.userphoto }}.webp" alt="Photo">
             </div>
-
             <!-- Правая колонка: информация -->
             <div class="user-details">
                 <h1 class="user-title">{{ user.username }} {{ user.usersurname }}</h1>
-                <p><strong>Логин:</strong> {{ user.userlogin }}</p>
+                <p><strong>Login:</strong> {{ user.userlogin }}</p>
                 <p><strong>Email:</strong> {{ user.useremail }}</p>
-                <p><strong>Дата регистрации:</strong> {{ user.created_at }}</p>
-                <a href="#" id="logout-button" class="logout-btn" onclick="logoutFunction(event)">Выйти</a>
+                <p><strong>Registered:</strong> {{ user.created_at }}</p>
+                <a href="#" id="logout-button" class="logout-btn" onclick="logoutFunction(event)">Log out</a>
             </div>
+
         </div>
     </section>
 
-    <!-- Блок сеансов -->
+    <!-- Блок забронированных мест -->
     <section class="sessions-section">
-        <h2>Сеансы</h2>
-        {% if user.cinema_sessions %}
+        <h2>Забронированные места</h2>
+
+        {% if user.seat_statuses %}
             <ul class="sessions-list">
-                {% for session in user.cinema_sessions %}
+                {% for seat in user.seat_statuses %}
                     <li>
-                        {{ session.sessiondate }} — {{ session.sessiontime }},
-                        {{ session.hall.names[0].hallname }},
-                        {{ session.price }} ₽
+                        Session id: {{ seat.cinema_session.sessionid }}
+                        movie: {{ seat.cinema_session.movie.moviename }}
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Нет сеансов для этого пользователя.</p>
+            <p>У пользователя нет данных о местах.</p>
         {% endif %}
     </section>
 

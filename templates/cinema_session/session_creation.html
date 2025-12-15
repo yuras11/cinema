@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema session creation</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/entity_creation.css">
+</head>
+<body>
+<div class="container">
+    <h1>Creation</h1>
+    <form id="entity-form" class="entity-form">
+        <label for="movieid">Movie id:</label>
+        <input type="text" id="movieid" name="movieid" required>
+
+        <label for="hallid">Hall id:</label>
+        <input type="text" id="hallid" name="hallid" required>
+
+        <label for="sessiondate">Session date:</label>
+        <input type="text" id="sessiondate" name="sessiondate" required>
+
+        <label for="sessiontime">Session time:</label>
+        <input type="text" id="sessiontime" name="sessiontime" required>
+
+        <label for="ticketfee">Ticket fee:</label>
+        <input type="text" id="ticketfee" name="ticketfee" required>
+
+        <label for="currencycode">Currency:</label>
+        <input type="text" id="currencycode" name="currencycode" required>
+
+        <button type="button" id="reg-button" class="submit-button" onclick="createFunction(event)">Create</button>    </form>
+</div>
+
+<!-- Подключаем внешний JavaScript-файл -->
+<script>
+    const ENTITY = "cinema_sessions";
+</script>
+<script src="/static/js/create_update_script.js"></script>
+</body>
+</html>

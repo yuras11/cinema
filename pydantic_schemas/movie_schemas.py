@@ -5,44 +5,39 @@ from pydantic import BaseModel, Field
 from typing import List
 from datetime import timedelta, date
 from pydantic_schemas.country_schemas import CountryScheme
-from pydantic_schemas.cast_member_schemas import CastMemberScheme, CastMemberUpdateScheme
-
-
-class MovieNameScheme(BaseModel):
-    movieid: uuid.UUID
-    languagecode: str
-    moviename: str
-    model_config = {'from_attributes': True}
-
-
-class GenreNameScheme(BaseModel):
-    genreid: uuid.UUID
-    languagecode: str
-    genrename: str
-    model_config = {'from_attributes': True}
-
-
-class GenreScheme(BaseModel):
-    genreid: uuid.UUID
-    names: List["GenreNameScheme"]
-    model_config = {'from_attributes': True}
+from pydantic_schemas.cast_member_schemas import CastMemberUpdateScheme
 
 
 class MovieScheme(BaseModel):
-    movieid: uuid.UUID
-    names: List["MovieNameScheme"]
+    moviename: str
     durationtime: timedelta
     agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
-    releasedate: date
-    countries: List["CountryScheme"]
-    genres: List["GenreScheme"]
-    cast: List["CastMemberUpdateScheme"]
+    releaseyear: int
+    genres: List[int]
+    cast: List[int]
+    countries: List[str]
+
     model_config = {'from_attributes': True}
 
 
 class MovieUpdateScheme(BaseModel):
-    movieid: uuid.UUID
+    movieid: int
+    moviename: str
     durationtime: timedelta
     agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
-    releasedate: date
+    releaseyear: int
+    genres: List[int]
+    cast: List[int]
+    countries: List[str]
+
+    model_config = {'from_attributes': True}
+
+
+class MovieGetAllScheme(BaseModel):
+    movieid: int
+    moviename: str
+    durationtime: timedelta
+    agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
+    releaseyear: int
+
     model_config = {'from_attributes': True}

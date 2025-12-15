@@ -14,21 +14,21 @@ import uuid
 movie_genres = Table(
     "movie_genres",
     Base.metadata,
-    Column("movieid", ForeignKey("movie.movieid"), primary_key=True),
+    Column("movieid", ForeignKey("movie.movieid", ondelete="CASCADE"), primary_key=True),
     Column("genreid", ForeignKey("genre.genreid"), primary_key=True)
 )
 
 movie_countries = Table(
     "movie_countries",
     Base.metadata,
-    Column("movieid", ForeignKey("movie.movieid"), primary_key=True),
+    Column("movieid", ForeignKey("movie.movieid", ondelete="CASCADE"), primary_key=True),
     Column("countrycode", ForeignKey("country.countrycode"), primary_key=True)
 )
 
 movie_cast = Table(
     "movie_cast",
     Base.metadata,
-    Column("movieid", ForeignKey("movie.movieid"), primary_key=True),
+    Column("movieid", ForeignKey("movie.movieid", ondelete="CASCADE"), primary_key=True),
     Column("memberid", ForeignKey("cast_member.memberid"), primary_key=True),
 )
 
@@ -36,12 +36,8 @@ movie_cast = Table(
 class GenreModel(Base):
     __tablename__ = "genre"
 
-    genreid: Mapped[uuid.UUID] = mapped_column(primary_key=True)
-
-    names: Mapped[List["GenreNameModel"]] = relationship(
-        back_populates="genre",
-        cascade="all, delete-orphan"
-    )
+    genreid: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    genrename: Mapped[str] = mapped_column(String(50))
 
     movies: Mapped[List["MovieModel"]] = relationship(
         secondary=movie_genres,
@@ -50,61 +46,38 @@ class GenreModel(Base):
     )
 
 
-class GenreNameModel(Base):
-    __tablename__ = "genre_names"
-    __table_args__ = (PrimaryKeyConstraint('genreid', 'languagecode'),)
-
-    genreid: Mapped[uuid.UUID] = mapped_column(ForeignKey(GenreModel.genreid))
-    languagecode: Mapped[str] = mapped_column(String(2))
-    genrename: Mapped[str] = mapped_column(String(50))
-
-    genre: Mapped["GenreModel"] = relationship(back_populates="names")
-
-
 class MovieModel(Base):
     __tablename__ = "movie"
 
-    movieid: Mapped[uuid.UUID] = mapped_column(primary_key=True)
+    movieid: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    moviename: Mapped[str] = mapped_column(String(100))
     durationtime: Mapped[timedelta] = mapped_column(Interval)
-    releasedate: Mapped[date] = mapped_column(Date)
+    releaseyear: Mapped[int] = mapped_column(Integer)
     agerate: Mapped[str] = mapped_column(String(3))
     moviephoto: Mapped[str] = mapped_column(Text, nullable=True)
 
-    names: Mapped[List["MovieNameModel"]] = relationship(
-        back_populates="movie",
-        cascade="all, delete-orphan",
-        lazy='joined'
-    )
 
     genres: Mapped[List["GenreModel"]] = relationship(
         secondary=movie_genres,
         back_populates="movies",
-        lazy='joined'
+#        lazy='joined',
+        passive_deletes=True
     )
 
     countries: Mapped[List["CountryModel"]] = relationship(
         secondary=movie_countries,
         back_populates="movies",
-        lazy='joined'
+#        lazy='joined',
+        passive_deletes=True
     )
 
     cast_members: Mapped[List["CastMemberModel"]] = relationship(
         secondary=movie_cast,
         back_populates="movies",
-        lazy="joined"
+#        lazy="joined",
+        passive_deletes=True
     )
 
     cinema_sessions: Mapped[List["CinemaSessionModel"]] = relationship(
-        back_populates="movie", cascade="all, delete-orphan", lazy='subquery'
+        back_populates="movie", cascade="all, delete-orphan", lazy='joined'
     )
-
-
-class MovieNameModel(Base):
-    __tablename__ = "movie_name"
-    __table_args__ = (PrimaryKeyConstraint('movieid', 'languagecode'),)
-
-    movieid: Mapped[uuid.UUID] = mapped_column(ForeignKey(MovieModel.movieid))
-    languagecode: Mapped[str] = mapped_column(String(2))
-    moviename: Mapped[str] = mapped_column(String(50))
-
-    movie: Mapped["MovieModel"] = relationship(back_populates="names")

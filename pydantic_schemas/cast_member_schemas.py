@@ -1,52 +1,20 @@
 import datetime
-import uuid
-
 from pydantic import BaseModel, Field
-from typing import List
-from pydantic_schemas.country_schemas import CountryScheme
-
-
-class CastMemberNameScheme(BaseModel):
-    memberid: uuid.UUID
-    languagecode: str
-    membername: str
-    model_config = {'from_attributes': True}
-
-
-class CastMemberScheme(BaseModel):
-    memberid: uuid.UUID
-    dateofbirth: datetime.date
-    countrycode: str = Field(min_length=2, max_length=2)
-    country: CountryScheme
-    names: List[CastMemberNameScheme]
-    positions: List["PositionScheme"]
-    model_config = {'from_attributes': True}
 
 
 class CastMemberCreateScheme(BaseModel):
-    memberid: uuid.UUID
+    membername: str
     dateofbirth: datetime.date
-    countrycode: str = Field(min_length=2, max_length=2)
-    names: List[CastMemberNameScheme]
-    positions: List["PositionScheme"]
+    countrycode: str
+    professionid: int
     model_config = {'from_attributes': True}
 
-
-class PositionNameScheme(BaseModel):
-    positionid: uuid.UUID
-    languagecode: str = Field(min_length=2, max_length=2)
-    positionname: str
-    model_config = {'from_attributes': True}
-
-
-class PositionScheme(BaseModel):
-    positionid: uuid.UUID
-    names: List[PositionNameScheme]
-    model_config = {'from_attributes': True}
 
 
 class CastMemberUpdateScheme(BaseModel):
-    memberid: uuid.UUID
+    memberid: int
+    membername: str
     dateofbirth: datetime.date
-    countrycode: str = Field(min_length=2, max_length=2)
+    countrycode:  str = Field(min_length=2, max_length=2)
+    professionid: int
     model_config = {'from_attributes': True}

@@ -1,5 +1,5 @@
 from repository.repos import CountryRepository
-from pydantic_schemas.country_schemas import CountryScheme, CountryNameScheme
+from pydantic_schemas.country_schemas import CountryScheme
 
 
 class CountryService:
@@ -9,18 +9,8 @@ class CountryService:
 
 
     @classmethod
-    async def create_country(cls, country_model: CountryScheme):
-        return await CountryRepository.insert(country_model=country_model)
-
-
-    @classmethod
-    async def add_name_to_existing_country(cls, country_name: CountryNameScheme):
-        return await CountryRepository.add_name(country_name=country_name)
-
-
-    @classmethod
-    async def update_country_name(cls, country_name: CountryNameScheme):
-        return await CountryRepository.update_name(country_name_scheme=country_name)
+    async def create_country(cls, country: CountryScheme):
+        return await CountryRepository.insert(**country.model_dump())
 
 
     @classmethod

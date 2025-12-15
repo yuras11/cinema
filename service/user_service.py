@@ -1,4 +1,5 @@
 from repository.repos import UserRepository
+from pydantic_schemas.user_schemas import UserUpdateScheme
 from uuid import UUID
 
 
@@ -29,7 +30,8 @@ class UserService:
 
 
     @classmethod
-    async def update_user(cls, **user_data):
+    async def update_user(cls, user_scheme: UserUpdateScheme):
+        user_data = user_scheme.model_dump()
         filters = {'userid':user_data['userid']}
         values = {key: value for key, value in user_data.items() if key != 'userid'}
         return await UserRepository.update(filters=filters, values=values)

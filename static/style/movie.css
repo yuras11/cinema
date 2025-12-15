@@ -5,6 +5,10 @@ body {
     color: #333;
 }
 
+.top-bar {
+    padding: 10px 20px;
+    background: #f5f5f5;
+}
 /* --- Шапка --- */
 .user-info-wrapper {
     position: absolute;
@@ -147,4 +151,24 @@ body {
 .user-icon:hover {
     background-color: #0056b3;
     color: #fff;
+}
+
+/* Кнопка "Назад" современного стиля */
+.back-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.back-link:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+    font-family: 'Roboto', sans-serif;
 }

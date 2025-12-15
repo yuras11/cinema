@@ -1,12 +1,12 @@
 from repository.database import connection
-from pydantic_schemas.hall_schemas import HallScheme, HallCreateScheme
+from pydantic_schemas.hall_schemas import HallCreateScheme, HallUpdateScheme
 from repository.repos import HallRepository
 import asyncio
 
 
 class HallService:
     @classmethod
-    async def get_all_halls(cls):
+    async def get_all(cls):
         return await HallRepository.get_all()
 
 
@@ -17,14 +17,13 @@ class HallService:
 
     @classmethod
     async def create_hall(cls, hall_scheme: HallCreateScheme):
-        return await HallRepository.insert(hall_scheme=hall_scheme)
-
+        return await HallRepository.create_hall(hall_scheme=hall_scheme)
 
     @classmethod
-    async def delete_hall(cls, hallid):
+    async def update_hall(cls, hall_scheme: HallUpdateScheme):
+        return await HallRepository.update_hall(hall_scheme=hall_scheme)
+
+    @classmethod
+    async def delete_hall(cls, hallid: int):
         return await HallRepository.delete(hallid=hallid)
 
-# halls = asyncio.get_event_loop().run_until_complete(HallService.get_all_halls())
-# for hall in halls:
-#     hall_p = HallScheme.model_validate(hall)
-#     print(hall_p.model_dump_json())

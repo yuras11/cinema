@@ -32,16 +32,16 @@ class CastMemberModel(Base):
 
     country: Mapped["CountryModel"] = relationship(
         back_populates="cast_members",
-        lazy='joined'
+        lazy='selectin'
     )
 
     profession: Mapped[ProfessionModel] = relationship(
         back_populates="cast_members",
-        lazy='joined'
+        lazy='selectin'
     )
 
     movies: Mapped[List["MovieModel"]] = relationship(
         secondary="movie_cast",
         back_populates="cast_members",
-        lazy='joined'
+        lazy='selectin'
     )

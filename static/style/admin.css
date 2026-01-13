@@ -132,3 +132,77 @@
     background: #c82333;
 }
 
+
+/* === Booked tickets section === */
+
+.sessions-section {
+    margin-top: 40px;
+}
+
+.bookings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.booking-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.booking-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.booking-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.booking-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.booking-info strong {
+    color: #555;
+}
+
+/* === Cancel button === */
+
+.cancel-btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background-color: #e53935;
+    color: white;
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #c62828;
+    transform: scale(1.05);
+}
+
+.cancel-btn:active {
+    transform: scale(0.97);
+}

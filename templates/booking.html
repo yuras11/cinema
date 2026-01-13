@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Бронирование мест</title>
+    <link rel="stylesheet" href="/static/style/booking.css?v=123">
+</head>
+<body>
+
+<!-- 🔝 Информация о сеансе -->
+<div class="session-info">
+    <h2>{{ session.movie.moviename }}</h2>
+    <p>
+        {{ session.sessiondate }} |
+        {{ session.sessiontime }} |
+        Зал: {{ session.hall.hallname }}
+    </p>
+</div>
+
+<!-- 🎟 Схема зала -->
+<div class="hall">
+    {% for row in range(1, hall.rowamount + 1) %}
+        <div class="row">
+            {% for seat in range(1, hall.seatamount + 1) %}
+                {% set occupied = seat_statuses_map.get((row, seat), false) %}
+                <div
+                    class="seat {{ 'occupied' if occupied else 'free' }}"
+                    data-row="{{ row }}"
+                    data-seat="{{ seat }}"
+                ></div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+
+<!-- 🔽 Кнопка -->
+<div class="actions">
+    <button id="book-btn" class="book-btn" onclick="bookSeat()" disabled>
+        Забронировать
+    </button>
+</div>
+
+<script>
+    const SESSION_ID = {{ session.sessionid }};
+</script>
+<script src="/static/js/booking.js?v=123"></script>
+
+</body>
+</html>

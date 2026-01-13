@@ -79,5 +79,5 @@ class MovieModel(Base):
     )
 
     cinema_sessions: Mapped[List["CinemaSessionModel"]] = relationship(
-        back_populates="movie", cascade="all, delete-orphan", lazy='joined'
+        back_populates="movie", cascade="all, delete-orphan", lazy='selectin'
     )

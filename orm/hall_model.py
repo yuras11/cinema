@@ -15,11 +15,15 @@ class HallModel(Base):
     seatamount: Mapped[int] = mapped_column(Integer)
 
     seats: Mapped[List["SeatModel"]] = relationship(
-        back_populates="hall", cascade="all, delete-orphan", lazy='joined', passive_deletes=True
+        back_populates="hall", cascade="all, delete-orphan",
+        #lazy='joined',
+        passive_deletes=True
     )
 
     cinema_sessions: Mapped[List["CinemaSessionModel"]] = relationship(
-        back_populates="hall", cascade="all, delete-orphan", lazy='joined', passive_deletes=True
+        back_populates="hall", cascade="all, delete-orphan",
+        #lazy='joined',
+        passive_deletes=True
     )
 
 
@@ -56,6 +60,9 @@ class SeatStatusModel(Base):
     seatnumber: Mapped[int]
     userid: Mapped[uuid.UUID] = mapped_column(nullable=True)
 
-    cinema_session: Mapped["CinemaSessionModel"] = relationship(back_populates="seat_statuses", lazy='joined')
+    cinema_session: Mapped["CinemaSessionModel"] = relationship(
+        back_populates="seat_statuses",
+        lazy='joined'
+    )
 
     user: Mapped["UserModel"] = relationship(back_populates="seat_statuses")

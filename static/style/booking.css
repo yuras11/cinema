@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.session-info {
+    margin-bottom: 20px;
+}
+
+.hall {
+    display: inline-block;
+    margin: 30px auto;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.seat {
+    width: 25px;
+    height: 25px;
+    margin: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.free {
+    background-color: #4CAF50; /* зелёный */
+}
+
+.occupied {
+    background-color: #E53935; /* красный */
+    cursor: not-allowed;
+}
+
+.selected {
+    background-color: #FBC02D; /* жёлтый */
+}
+
+.actions {
+    margin-top: 30px;
+}
+
+/* === Booking button === */
+
+.book-btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background-color: #43a047;
+    color: white;
+
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.book-btn:hover {
+    background-color: #388e3c;
+    transform: scale(1.05);
+}
+
+.book-btn:active {
+    transform: scale(0.97);
+}
+
+.book-btn:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+    opacity: 0.7;
+}

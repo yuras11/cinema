@@ -23,3 +23,10 @@ class CinemaSessionUpdateScheme(BaseModel):
     currencycode: str
 
     model_config = {'from_attributes': True}
+
+
+class SeatBookingRequest(BaseModel):
+    rownumber: int
+    seatnumber: int
+
+    model_config = {'from_attributes': True}

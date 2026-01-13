@@ -22,11 +22,17 @@ class CinemaSessionModel(Base):
     ticketfee: Mapped[float] = mapped_column(Numeric)
     currencycode: Mapped[str] = mapped_column(String(3))
 
-    movie: Mapped["MovieModel"] = relationship(back_populates="cinema_sessions", lazy='joined')
-    hall: Mapped["HallModel"] = relationship(back_populates="cinema_sessions", lazy='joined')
+    movie: Mapped["MovieModel"] = relationship(
+        back_populates="cinema_sessions",
+        lazy='joined'
+    )
+    hall: Mapped["HallModel"] = relationship(
+        back_populates="cinema_sessions",
+        lazy='joined'
+    )
 
     seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(
         "SeatStatusModel", back_populates="cinema_session",
         cascade="all, delete-orphan", passive_deletes=True,
-        overlaps="seat,seat_statuses", lazy='joined'
+        overlaps="seat,seat_statuses", lazy='selectin'
     )

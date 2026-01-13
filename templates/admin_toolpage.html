@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin toolbar</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/admin.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/admin.css?v=123">
 </head>
 <body>
 
@@ -87,6 +87,32 @@
         </div>
     </section>
 
-<script src="/static/js/script.js"></script>
+    <!-- Блок забронированных мест -->
+    <section class="sessions-section">
+    <h2>Booked tickets</h2>
+
+    {% if user.seat_statuses %}
+        <div class="bookings-grid">
+            {% for seat in user.seat_statuses %}
+                <div class="booking-card">
+                    <div class="booking-info">
+                        <p><strong>Movie:</strong> {{ seat.cinema_session.movie.moviename }}</p>
+                        <p><strong>Hall:</strong> {{ seat.cinema_session.hall.hallname }}</p>
+                        <p><strong>Date:</strong> {{ seat.cinema_session.sessiondate }} {{ seat.cinema_session.sessiontime }}</p>
+                        <p><strong>Seat:</strong> Row {{ seat.rownumber }}, Seat {{ seat.seatnumber }}</p>
+                    </div>
+
+                    <button class="cancel-btn" onclick="cancelBooking({{seat.cinema_session.sessionid | int}}, {{seat.rownumber | int}}, {{seat.seatnumber | int}})">
+                        Cancel
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have not booked any tickets yet.</p>
+    {% endif %}
+    </section>
+
+<script src="/static/js/booking.js?v=123"></script>
 </body>
 </html>

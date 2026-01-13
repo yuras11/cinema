@@ -51,7 +51,10 @@
                     <p><strong>Time:</strong> {{ cinema_session.sessiontime }}</p>
                     <p><strong>Hall:</strong> {{ cinema_session.hall.hallname }}</p>
                     <p><strong>Price:</strong> {{ cinema_session.ticketfee }} {{ cinema_session.currencycode }}</p>
-                    <a href="/" class="buy-btn">Book a ticket</a>
+                    <a href="/cinema_sessions/booking/{{ cinema_session.sessionid }}"
+                        class="buy-btn">
+                            Book a ticket
+                    </a>
                 </div>
               {% endfor %}
             </div>

@@ -1,5 +1,6 @@
 import datetime
 
+from orm.user_model import UserModel
 from pydantic_schemas.cinema_session_schemas import CinemaSessionCreateScheme, CinemaSessionUpdateScheme
 from repository.repos import CinemaSessionRepository
 from repository.database import connection
@@ -7,6 +8,11 @@ import asyncio
 
 
 class CinemaSessionService:
+    @classmethod
+    async def get_cinema_session_by_id(cls, sessionid: int):
+        return await CinemaSessionRepository.get_by_primary_key(sessionid=sessionid)
+
+
     @classmethod
     async def get_all_cinema_sessions(cls):
         return await CinemaSessionRepository.get_all()
@@ -35,3 +41,21 @@ class CinemaSessionService:
     @classmethod
     async def delete_cinema_session(cls, sessionid: int):
         return await CinemaSessionRepository.delete(sessionid=sessionid)
+
+    @classmethod
+    async def book_seat(cls, sessionid: int, rownumber: int, seatnumber: int, user: UserModel) -> bool:
+        return await CinemaSessionRepository.book_seat(
+            sessionid=sessionid,
+            rownumber=rownumber,
+            seatnumber=seatnumber,
+            userid=user.userid
+        )
+
+    @classmethod
+    async def cancel_booking(cls, sessionid: int, rownumber: int, seatnumber: int, userid):
+        return await CinemaSessionRepository.cancel_booking(
+            sessionid=sessionid,
+            rownumber=rownumber,
+            seatnumber=seatnumber,
+            userid=userid
+        )

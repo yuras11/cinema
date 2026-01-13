@@ -1,9 +1,10 @@
+import uuid
 from http.client import HTTPException
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
-
+from sqlalchemy.orm import load_only
 
 from orm.cast_member_model import CastMemberModel, ProfessionModel
 from orm.cinema_session_model import CinemaSessionModel
@@ -45,19 +46,37 @@ class MovieRepository(Repository):
             agerate=movie_scheme.agerate
         )
 
-        genres = await session.execute(
-            select(GenreModel).where(GenreModel.genreid.in_(movie_scheme.genres))
-        )
-        countries = await session.execute(
-            select(CountryModel).where(CountryModel.countrycode.in_(movie_scheme.countries))
-        )
-        cast_members = await session.execute(
-            select(CastMemberModel).where(CastMemberModel.memberid.in_(movie_scheme.cast))
-        )
+        genre_ids = movie_scheme.genres or []
+        country_codes = movie_scheme.countries or []
+        cast_ids = movie_scheme.cast or []
 
-        movie.genres = list(genres.scalars().unique().all())
-        movie.countries = list(countries.scalars().unique().all())
-        movie.cast_members = list(cast_members.scalars().unique().all())
+        if genre_ids:
+            genres = await session.execute(
+                select(GenreModel)
+                .options(load_only(GenreModel.genreid))
+                .where(GenreModel.genreid.in_(genre_ids))
+            )
+            movie.genres = genres.scalars().unique().all()
+
+        if country_codes:
+            countries = await session.execute(
+                select(CountryModel)
+                .options(load_only(CountryModel.countrycode))
+                .where(CountryModel.countrycode.in_(country_codes))
+            )
+            movie.countries = countries.scalars().unique().all()
+
+        if cast_ids:
+            cast_members = await session.execute(
+                select(CastMemberModel)
+                .options(load_only(CastMemberModel.memberid))
+                .where(CastMemberModel.memberid.in_(cast_ids))
+            )
+            movie.cast_members = cast_members.scalars().unique().all()
+
+        # movie.genres = list(genres.scalars().unique().all())
+        # movie.countries = list(countries.scalars().unique().all())
+        # movie.cast_members = list(cast_members.scalars().unique().all())
 
         session.add(movie)
         try:
@@ -243,3 +262,68 @@ class CinemaSessionRepository(Repository):
         await session.commit()
         return cinema_session
 
+
+    @classmethod
+    @connection
+    async def book_seat(cls,
+            session: AsyncSession,
+            sessionid: int,
+            rownumber: int,
+            seatnumber: int,
+            userid: uuid.UUID,
+    ) -> bool:
+
+        stmt = (
+            select(SeatStatusModel)
+            .where(
+                SeatStatusModel.sessionid == sessionid,
+                SeatStatusModel.rownumber == rownumber,
+                SeatStatusModel.seatnumber == seatnumber,
+            )
+        )
+
+        result = await session.execute(stmt)
+        seat_status = result.unique().scalar_one_or_none()
+
+        if seat_status is None:
+            return False
+
+        if seat_status.userid is not None:
+            return False
+
+        seat_status.userid = userid
+        session.add(seat_status)
+
+        await session.commit()
+        return True
+
+
+    @classmethod
+    @connection
+    async def cancel_booking(cls,
+            session: AsyncSession,
+            sessionid: int,
+            rownumber: int,
+            seatnumber: int,
+            userid: uuid.UUID
+    ) -> bool:
+
+        stmt = (
+            select(SeatStatusModel).where(
+            SeatStatusModel.sessionid == sessionid,
+            SeatStatusModel.rownumber == rownumber,
+            SeatStatusModel.seatnumber == seatnumber,
+            SeatStatusModel.userid == userid)
+        )
+
+        result = await session.execute(stmt)
+        seat_status = result.unique().scalar_one_or_none()
+
+        if not seat_status:
+            return False
+
+        seat_status.userid = None
+        session.add(seat_status)
+
+        await session.commit()
+        return True

@@ -150,3 +150,6 @@ async function logoutFunction(event) {
         alert('Произошла ошибка при выходе. Попробуйте снова.');
     }
 }
+
+
+

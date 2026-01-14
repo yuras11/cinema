@@ -34,7 +34,7 @@ async function bookSeat() {
         return;
     }
 
-    window.location.href = "/movies/actual";
+    window.location.href = "/cinema_sessions/success/booked";
 }
 
 
@@ -54,7 +54,7 @@ async function cancelBooking(sessionId, row, seat) {
         return;
     }
 
-    window.location.href = "/movies/actual";
+    window.location.href = "/cinema_sessions/success/returned";
 
 }
 

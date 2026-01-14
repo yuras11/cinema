@@ -4,7 +4,7 @@ from http.client import HTTPException
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
-from sqlalchemy.orm import load_only
+from sqlalchemy.orm import load_only, selectinload
 
 from orm.cast_member_model import CastMemberModel, ProfessionModel
 from orm.cinema_session_model import CinemaSessionModel
@@ -90,10 +90,16 @@ class MovieRepository(Repository):
     @connection
     async def update_movie(cls, session: AsyncSession, movie_scheme: MovieUpdateScheme):
         result = await session.execute(
-            select(MovieModel).where(MovieModel.movieid==movie_scheme.movieid)
+            select(MovieModel)
+            .options(
+                selectinload(MovieModel.genres),
+                selectinload(MovieModel.countries),
+                selectinload(MovieModel.cast_members),
+            )
+            .where(MovieModel.movieid == movie_scheme.movieid)
         )
 
-        movie = result.unique().scalar_one_or_none()
+        movie = result.scalar_one_or_none()
 
         if movie is None:
             return None
@@ -107,19 +113,19 @@ class MovieRepository(Repository):
             genres = await session.execute(
                 select(GenreModel).where(GenreModel.genreid.in_(movie_scheme.genres))
             )
-            movie.genres = list(genres.scalars().unique().all())
+            movie.genres = genres.scalars().unique().all()
 
         if movie_scheme.countries is not None:
             countries = await session.execute(
                 select(CountryModel).where(CountryModel.countrycode.in_(movie_scheme.countries))
             )
-            movie.countries = list(countries.scalars().unique().all())
+            movie.countries = countries.scalars().unique().all()
 
         if movie_scheme.cast is not None:
             cast_members = await session.execute(
                 select(CastMemberModel).where(CastMemberModel.memberid.in_(movie_scheme.cast))
             )
-            movie.cast_members = list(cast_members.scalars().unique().all())
+            movie.cast_members = cast_members.scalars().unique().all()
 
         await session.commit()
         await session.refresh(movie)

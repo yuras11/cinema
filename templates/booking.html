@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Бронирование мест</title>
+    <title>Booking</title>
     <link rel="stylesheet" href="/static/style/booking.css?v=123">
 </head>
 <body>
@@ -37,14 +37,14 @@
 <!-- 🔽 Кнопка -->
 <div class="actions">
     <button id="book-btn" class="book-btn" onclick="bookSeat()" disabled>
-        Забронировать
+        Book a ticket
     </button>
 </div>
 
 <script>
     const SESSION_ID = {{ session.sessionid }};
 </script>
-<script src="/static/js/booking.js?v=123"></script>
+<script src="/static/js/booking.js"></script>
 
 </body>
 </html>

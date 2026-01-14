@@ -42,11 +42,15 @@ async def get_movie_by_id(movieid: int,
     movie = await MovieService.get_movie_by_id(movieid=movieid)
     movie.cinema_sessions = list(filter(lambda x: x.sessiondate >= datetime.date.today(), movie.cinema_sessions))
     cinema_sessions_by_date = MovieService.get_cinema_sessions_by_date(movie=movie)
+    director = list(filter(lambda x: x.professionid == 2, movie.cast_members))[0]
+    cast = list(filter(lambda x: x.professionid == 1, movie.cast_members))
     return templates.TemplateResponse(name='movie/movie.html',
                                       context={'request': request,
                                                'movie': movie,
                                                'user': user,
-                                               'cinema_sessions_by_date': cinema_sessions_by_date})
+                                               'cinema_sessions_by_date': cinema_sessions_by_date,
+                                               'director': director,
+                                               'cast': cast})
 
 
 @movie_router.get('/create')

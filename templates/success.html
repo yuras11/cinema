@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking status</title>
+    <link rel="stylesheet" href="/static/style/success.css">
+</head>
+<body>
+
+<div class="success-page">
+    <div class="success-card">
+        <img src="/static/images/cinema_success.webp" alt="Cinema" class="success-image">
+
+        <h1 class="success-title">
+            🎉 Success!
+        </h1>
+
+        <p class="success-text">
+            You have successfully <span id="action-text">{{action}}</span> the ticket.
+        </p>
+
+        <a href="/movies/actual" class="home-btn">
+            Go to main page
+        </a>
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const action = params.get("action");
+    if (action === "cancelled") {
+        document.getElementById("action-text").textContent = "returned";
+    }
+</script>
+
+</body>
+</html>

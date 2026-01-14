@@ -3,118 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Main - Cinema</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: white;
-        }
-
-        header {
-            background-color: rgba(0, 0, 0, 0.85);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-            color: #00BFFF;
-            letter-spacing: 1px;
-        }
-
-        .hero {
-            position: relative;
-            height: 500px;
-            background-image: url('/static/images/background.webp');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-content h2 {
-            font-size: 42px;
-            margin-bottom: 30px;
-        }
-
-        .hero-content .btn {
-            background-color: #00BFFF;
-            color: white;
-            padding: 12px 28px;
-            margin: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            text-decoration: none;
-        }
-
-        .hero-content .btn:hover {
-            background-color: #009acd;
-            transform: scale(1.05);
-        }
-
-        footer {
-            background-color: #101820;
-            color: #ccc;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 14px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        footer p {
-            margin: 5px 0;
-        }
-
-        footer span {
-            color: #00BFFF;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style/home.css">
 </head>
 <body>
-    <header>
-        <h1>Cinema Light</h1>
-    </header>
 
-    <section class="hero">
-        <div class="overlay"></div>
-        <div class="hero-content">
-            <h2>Enjoy the magic of the cinema</h2>
-            <a href="/auth/login" class="btn">Enter</a>
-            <a href="/auth/registration" class="btn">Sign in</a>
-        </div>
-    </section>
+<header>
+    <h1>Cinema Light</h1>
+</header>
 
-    <footer>
-        <p>&copy; <span>2025</span> "Cinema Light"</p>
-        <p>All rights reserved</p>
-    </footer>
+<section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h2>Book tickets to the best cinema in the world.</h2>
+        <a href="/auth/login" class="btn">Enter</a>
+        <a href="/auth/registration" class="btn">Sign in</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; <span>2025</span> "Cinema Light"</p>
+    <p>All rights reserved</p>
+</footer>
+
 </body>
 </html>

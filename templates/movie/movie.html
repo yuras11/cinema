@@ -36,6 +36,8 @@
             <p><strong>Duration:</strong> {{ movie.durationtime }}</p>
             <p><strong>Release year:</strong> {{ movie.releaseyear }}</p>
             <p><strong>Age rate:</strong> {{ movie.agerate }}</p>
+            <p><strong>Director:</strong> {{ director.membername }}</p>
+            <p><strong>Actors: </strong>{{ cast | map(attribute='membername') | join(', ') }}</p>
         </div>
     </main>
 

@@ -114,3 +114,10 @@ async def cancel_booking(
         raise HTTPException(status_code=400, detail="Cannot cancel this booking")
 
     return {"message": "ok"}
+
+
+@cinema_session_router.get('/success/{action}')
+async def success_page(request: Request, action: str):
+    return templates.TemplateResponse(name='success.html',
+                                      context={'request': request,
+                                               'action': action})

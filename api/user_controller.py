@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, UploadFile
 from fastapi.params import Depends
 from fastapi.templating import Jinja2Templates
 from dependencies import get_current_admin_user
 from service.user_service import UserService
 from pydantic_schemas.user_schemas import UserRegisterScheme, UserUpdateScheme
+import shutil
 
 user_router = APIRouter(prefix='/users', tags=["Working with users"])
 templates = Jinja2Templates(directory='templates')
@@ -54,3 +55,7 @@ async def delete_user(userid: str):
     return {'message': "User is successfully deleted"} if result else {'message': 'error'}
 
 
+# @user_router.post('/add_photo')
+# async def add_student_photo(file: UploadFile, image_name: int):
+#     with open(f"static/images/{image_name}.webp", "wb+") as photo_obj:
+#         shutil.copyfileobj(file.file, photo_obj)

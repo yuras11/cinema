@@ -17,10 +17,7 @@ templates = Jinja2Templates(directory='templates')
 #     return templates.TemplateResponse(name='users.html', context={'request': request, 'users': users})
 
 
-@router.post('/add_photo')
-async def add_student_photo(file: UploadFile, image_name: int):
-    with open(f"static/images/{image_name}.webp", "wb+") as photo_obj:
-        shutil.copyfileobj(file.file, photo_obj)
+
 
 
 # @router.get('/users/{userlogin}')

@@ -83,3 +83,12 @@ class MovieModel(Base):
         cascade="all, delete-orphan",
         lazy='selectin'
     )
+
+    def to_dict(self):
+        return {
+            'movieid': self.movieid,
+            'moviename': self.moviename,
+            'durationtime': self.durationtime,
+            'releaseyear': self.releaseyear,
+            'agerate': self.agerate
+        }

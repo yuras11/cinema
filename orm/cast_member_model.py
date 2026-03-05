@@ -45,3 +45,12 @@ class CastMemberModel(Base):
         back_populates="cast_members",
         lazy='selectin'
     )
+
+    def to_dict(self):
+        return {
+            'memberid': self.memberid,
+            'membername': self.membername,
+            'dateofbirth': self.dateofbirth,
+            'countrycode': self.countrycode,
+            'professionid': self.professionid
+        }

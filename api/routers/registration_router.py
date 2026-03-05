@@ -10,7 +10,7 @@ from dependencies import get_current_user, get_current_admin_user
 from fastapi.templating import Jinja2Templates
 
 
-registration_router = APIRouter(prefix='/auth', tags=['Auth'])
+registration_router = APIRouter(prefix='/site', tags=['Site'])
 templates = Jinja2Templates(directory='templates')
 
 

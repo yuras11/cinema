@@ -6,8 +6,18 @@ from api.cinema_session_controller import cinema_session_router
 from api.country_controller import country_router
 from api.hall_controller import hall_router
 from api.movie_controller import movie_router
+
 from api.user_controller import user_router
-from api.registration_controller import registration_router
+from api.routers.registration_router import registration_router
+
+from api.routers.user_router import test_user_router
+from api.routers.country_router import test_country_router
+from api.routers.cast_member_router import test_cm_router
+from api.routers.hall_router import test_hall_router
+from api.routers.movie_router import test_movie_router
+from api.routers.cinema_session_router import test_cs_router
+
+
 import uvicorn
 
 from fastapi.templating import Jinja2Templates
@@ -22,6 +32,15 @@ app.include_router(country_router)
 app.include_router(hall_router)
 app.include_router(cast_member_router)
 app.include_router(registration_router)
+
+
+app.include_router(test_user_router)
+app.include_router(test_country_router)
+app.include_router(test_cm_router)
+app.include_router(test_hall_router)
+app.include_router(test_movie_router)
+app.include_router(test_cs_router)
+
 
 app.mount('/static', StaticFiles(directory='static'), 'static')
 

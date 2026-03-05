@@ -20,3 +20,9 @@ class CountryModel(Base):
         back_populates="countries",
         lazy='joined'
     )
+
+    def to_dict(self):
+        return {
+            'countrycode': self.countrycode,
+            'countryname': self.countryname
+        }

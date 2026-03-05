@@ -36,3 +36,14 @@ class CinemaSessionModel(Base):
         cascade="all, delete-orphan", passive_deletes=True,
         overlaps="seat,seat_statuses", lazy='selectin'
     )
+
+    def to_dict(self):
+        return {
+            'sessionid': self.sessionid,
+            'movieid': self.movieid,
+            'hallid': self.hallid,
+            'sessiondate': self.sessiondate,
+            'sessiontime': self.sessiontime,
+            'ticketfee': self.ticketfee,
+            'currencycode': self.currencycode
+        }

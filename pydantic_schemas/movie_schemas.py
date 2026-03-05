@@ -41,3 +41,14 @@ class MovieGetAllScheme(BaseModel):
     releaseyear: int
 
     model_config = {'from_attributes': True}
+
+
+class MovieCommand(BaseModel):
+    moviename: str
+    durationtime: timedelta
+    agerate: str = Field(pattern=r"^\d{1,2}\+$", description="Age rate should be in a proper format")
+    releaseyear: int
+    genres: List[int]
+    cast: List[int]
+    countries: List[str]
+    model_config = {'from_attributes': True}

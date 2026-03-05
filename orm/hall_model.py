@@ -26,6 +26,14 @@ class HallModel(Base):
         passive_deletes=True
     )
 
+    def to_dict(self):
+        return {
+            'hallid': self.hallid,
+            'hallname': self.hallname,
+            'rowamount': self.rowamount,
+            'seatamount': self.seatamount
+        }
+
 
 class SeatModel(Base):
     __tablename__ = "seat"

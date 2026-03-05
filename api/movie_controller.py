@@ -1,9 +1,5 @@
 import datetime
-import uuid
-
 from fastapi import APIRouter, Depends, Request
-from typing import Optional, List
-
 from dependencies import get_current_admin_user, get_current_user
 from orm.user_model import UserModel
 from pydantic_schemas.movie_schemas import MovieScheme, MovieUpdateScheme, MovieGetAllScheme

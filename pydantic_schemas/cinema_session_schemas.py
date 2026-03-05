@@ -30,3 +30,14 @@ class SeatBookingRequest(BaseModel):
     seatnumber: int
 
     model_config = {'from_attributes': True}
+
+
+class CinemaSessionCommand(BaseModel):
+    movieid: int
+    hallid: int
+    sessiondate: datetime.date
+    sessiontime: datetime.timedelta
+    ticketfee: float
+    currencycode: str
+
+    model_config = {'from_attributes': True}

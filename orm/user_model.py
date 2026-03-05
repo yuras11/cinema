@@ -18,3 +18,12 @@ class UserModel(Base):
     userphoto: Mapped[str] = mapped_column(Text, nullable=True)
 
     seat_statuses: Mapped[List["SeatStatusModel"]] = relationship(back_populates="user", lazy='joined')
+
+    def to_dict(self):
+        return {
+            'userid': self.userid,
+            'userlogin': self.userlogin,
+            'userpassword': self.userpassword,
+            'username': self.username,
+            'useremail': self.useremail
+        }

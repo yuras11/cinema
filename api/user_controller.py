@@ -4,7 +4,6 @@ from fastapi.templating import Jinja2Templates
 from dependencies import get_current_admin_user
 from service.user_service import UserService
 from pydantic_schemas.user_schemas import UserRegisterScheme, UserUpdateScheme
-import shutil
 
 user_router = APIRouter(prefix='/users', tags=["Working with users"])
 templates = Jinja2Templates(directory='templates')

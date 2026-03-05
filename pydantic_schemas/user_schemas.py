@@ -21,3 +21,11 @@ class UserUpdateScheme(BaseModel):
 class UserLoginScheme(BaseModel):
     userlogin: str
     userpassword: str
+
+
+class UserCommand(BaseModel):
+    userlogin: str
+    userpassword: str
+    username: str
+    useremail: str
+    model_config = {'from_attributes': True}

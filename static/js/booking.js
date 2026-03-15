@@ -20,7 +20,7 @@ async function bookSeat() {
     const row = selectedSeat.dataset.row;
     const seat = selectedSeat.dataset.seat;
 
-    const response = await fetch(`/cinema_sessions/booking/${SESSION_ID}`, {
+    const response = await fetch(`/cinema_sessions/${SESSION_ID}/booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -34,13 +34,13 @@ async function bookSeat() {
         return;
     }
 
-    window.location.href = "/cinema_sessions/success/booked";
+    window.location.href = "/pages/success/booked";
 }
 
 
 async function cancelBooking(sessionId, row, seat) {
     console.log("cancelBooking called", sessionId, row, seat);
-    const response = await fetch(`/cinema_sessions/booking/cancel/${sessionId}`, {
+    const response = await fetch(`/cinema_sessions/${sessionId}/booking/cancel`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ async function cancelBooking(sessionId, row, seat) {
         return;
     }
 
-    window.location.href = "/cinema_sessions/success/returned";
+    window.location.href = "/pages/success/returned";
 
 }
 
@@ -63,7 +63,7 @@ async function logoutFunction(event) {
     event.preventDefault(); // Отменяем переход по ссылке
 
     try {
-        const response = await fetch('/auth/logout', {
+        const response = await fetch('/site/logout', {
             method: 'POST',
             credentials: 'include'
         });

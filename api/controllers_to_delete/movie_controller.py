@@ -80,8 +80,7 @@ async def delete_movie(request: Request, is_admin = Depends(get_current_admin_us
     if is_admin:
         return templates.TemplateResponse(name='entity_delete.html',
                                       context={'request': request,
-                                               'entity': 'movies'
-                                               })
+                                               'entity': 'movies'})
 
 
 @movie_router.delete('/delete')

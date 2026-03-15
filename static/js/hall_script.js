@@ -7,7 +7,7 @@ async function createHallFunction(event) {
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('/halls/create', {
+        const response = await fetch('/halls/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ async function createHallFunction(event) {
         const result = await response.json();
 
         if (result.message) {  // Проверяем наличие сообщения о успешной регистрации
-            window.location.href = '/movies/actual';  // Перенаправляем пользователя на страницу логина
+            window.location.href = '/pages/movies/all/actual';  // Перенаправляем пользователя на страницу логина
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }
@@ -46,7 +46,7 @@ async function updateHallFunction(event) {
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('/halls/update', {
+        const response = await fetch('/halls/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ async function updateHallFunction(event) {
         const result = await response.json();
 
         if (result.message) {  // Проверяем наличие сообщения о успешной регистрации
-            window.location.href = '/movies/actual';  // Перенаправляем пользователя на страницу
+            window.location.href = '/pages/movies/all/actual';  // Перенаправляем пользователя на страницу
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }

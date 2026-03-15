@@ -7,33 +7,33 @@ from api.queries.country.get_country_by_id_query import GetCountryByIdQueryHandl
 from pydantic_schemas.country_schemas import CountryCommand
 
 
-test_country_router = APIRouter(prefix='/test_countries', tags=["Countries"])
+country_router = APIRouter(prefix='/countries', tags=["Countries"])
 
-@test_country_router.get('/')
+@country_router.get('/')
 async def get_all_countries():
     countries = await GetAllCountriesQueryHandler.handle_async()
     return [country.to_dict() for country in countries]
 
 
-@test_country_router.get('/{countryid}')
+@country_router.get('/{countryid}')
 async def get_country_by_id(countryid: str):
     country = await GetCountryByIdQueryHandler.handle_async(countrycode=countryid)
     return country.to_dict()
 
 
-@test_country_router.post('/')
+@country_router.post('/')
 async def create_country(country: CountryCommand):
     result = await CreateCountryCommandHandler.handle_async(command=country)
     return {'message': "Country is successfully created"} if result else {'message': 'error'}
 
 
-@test_country_router.put('/{countryid}')
+@country_router.put('/{countryid}')
 async def update_country(countryid: str, command: CountryCommand):
     result = await UpdateCountryCommandHandler.handle_async(countrycode=countryid, command=command)
     return {'message': "Country is successfully updated"} if result else {'message': 'error'}
 
 
-@test_country_router.delete('/{countryid}')
+@country_router.delete('/{countryid}')
 async def delete_country(countryid: str):
     result = await DeleteCountryCommandHandler.handle_async(countrycode=countryid)
     return {'message': "Country is successfully deleted"} if result else {'message': 'error'}

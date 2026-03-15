@@ -11,6 +11,7 @@ from service.hall_service import HallService
 cinema_session_router = APIRouter(prefix='/cinema_sessions', tags=['Working with cinema sessions'])
 templates = Jinja2Templates(directory='templates')
 
+
 @cinema_session_router.get('/all')
 async def get_all_cinema_sessions():
     movies = await CinemaSessionService.get_all_cinema_sessions()
@@ -52,8 +53,7 @@ async def update_cinema_session(request: Request,
     if is_admin:
         return templates.TemplateResponse(name='entity_delete.html',
                                           context={'request': request,
-                                                   'entity': 'cinema_sessions'
-                                                   })
+                                                   'entity': 'cinema_sessions'})
 
 
 @cinema_session_router.delete('/delete')

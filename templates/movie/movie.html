@@ -19,7 +19,7 @@
                 {{ user.username }}
             {% endif %}
         </span>
-        <a href="/auth/profile" class="user-icon" title="Profile">
+        <a href="/pages/site/profile" class="user-icon" title="Profile">
             <i class="fas fa-user"></i>
         </a>
     </div>
@@ -53,7 +53,7 @@
                     <p><strong>Time:</strong> {{ cinema_session.sessiontime }}</p>
                     <p><strong>Hall:</strong> {{ cinema_session.hall.hallname }}</p>
                     <p><strong>Price:</strong> {{ cinema_session.ticketfee }} {{ cinema_session.currencycode }}</p>
-                    <a href="/cinema_sessions/booking/{{ cinema_session.sessionid }}"
+                    <a href="/pages/cinema_sessions/booking/{{ cinema_session.sessionid }}"
                         class="buy-btn">
                             Book a ticket
                     </a>

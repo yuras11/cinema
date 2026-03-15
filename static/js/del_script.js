@@ -12,10 +12,8 @@ async function deleteFunction(event) {
         return;
     }
 
-
-
     try {
-        const url = "/" + ENTITY + "/delete?" + ENTITY.slice(0, -1) + "id=" + entityId;
+        const url = "/" + ENTITY + "/" + entityId;
         const response = await fetch(url, {
             method: 'DELETE'
         });
@@ -31,7 +29,7 @@ async function deleteFunction(event) {
         alert(result.message);
 
         if (result.message.includes("deleted")) {
-            window.location.href = '/movies/actual';
+            window.location.href = '/pages/movies/all/actual';
         }
 
     } catch (error) {

@@ -12,7 +12,7 @@
     {% if user %}
         <span class="user-fullname">{{ user.username }} </span>
     {% endif %}
-    <a href="/auth/profile" class="user-icon" title="Profile">
+    <a href="/pages/site/profile" class="user-icon" title="Profile">
         <i class="fas fa-user"></i>
     </a>
 </div>
@@ -26,7 +26,7 @@
                 <p>Duration: {{ movie.durationtime }}</p>
                 <p>Release year: {{ movie.releaseyear }}</p>
                 <p>Age rate: {{ movie.agerate }}</p>
-                <a href="/movies/all/{{movie.movieid}}">Watch sessions</a>
+                <a href="/pages/movies/{{movie.movieid}}">Watch sessions</a>
             </div>
         </div>
         {% endfor %}

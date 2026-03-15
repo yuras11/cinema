@@ -5,7 +5,6 @@ async function createFunction(event) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // Преобразуем строковые значения в массивы
     const arrayFields = ["genres", "cast", "countries"];
 
     arrayFields.forEach(field => {
@@ -18,7 +17,7 @@ async function createFunction(event) {
     });
 
     try {
-        const response = await fetch(`/${ENTITY}/create`, {
+        const response = await fetch(`/${ENTITY}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,7 +34,7 @@ async function createFunction(event) {
         const result = await response.json();
 
         if (result.message) {
-            window.location.href = '/movies/actual';
+            window.location.href = '/pages/movies/all/actual';
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }
@@ -67,7 +66,7 @@ async function updateFunction(event) {
     });
 
     try {
-        const response = await fetch(`/${ENTITY}/update`, {
+        const response = await fetch(`/${ENTITY}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -84,7 +83,7 @@ async function updateFunction(event) {
         const result = await response.json();
 
         if (result.message) {
-            window.location.href = '/movies/actual';
+            window.location.href = '/pages/movies/all/actual';
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }
@@ -94,8 +93,6 @@ async function updateFunction(event) {
         alert('Произошла ошибка при обновлении. Пожалуйста, попробуйте снова.');
     }
 }
-
-
 
 
 // Функция для отображения ошибок

@@ -1,6 +1,8 @@
 from fastapi import Request, HTTPException, status, Depends
 from jose import jwt, JWTError
 from datetime import datetime, timezone
+
+from api.queries.movie.get_actual_movies_query import GetActualMoviesQueryHandler
 from config import get_auth_data
 from orm.user_model import UserModel
 #from app.exceptions import TokenExpiredException, NoJwtException, NoUserIdException, ForbiddenException
@@ -42,3 +44,8 @@ async def get_current_admin_user(current_user: UserModel = Depends(get_current_u
         return current_user
     return None
     #raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')
+
+
+async def get_actual_movies():
+    movies = await GetActualMoviesQueryHandler.handle_async()
+    return movies

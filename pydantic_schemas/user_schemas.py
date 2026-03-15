@@ -29,3 +29,8 @@ class UserCommand(BaseModel):
     username: str
     useremail: str
     model_config = {'from_attributes': True}
+
+
+class UserLoginCommand(BaseModel):
+    userlogin: str
+    userpassword: str

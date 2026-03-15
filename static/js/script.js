@@ -7,7 +7,7 @@ async function regFunction(event) {
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('/auth/registration', {
+        const response = await fetch('/site/registration', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ async function regFunction(event) {
         const result = await response.json();
 
         if (result.message) {  // Проверяем наличие сообщения о успешной регистрации
-            window.location.href = '/auth/login';  // Перенаправляем пользователя на страницу логина
+            window.location.href = '/pages/site/login';  // Перенаправляем пользователя на страницу логина
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }
@@ -59,28 +59,6 @@ function displayErrors(errorData) {
     alert(message);
 }
 
-// Функция для отображения ошибок
-function displayErrors(errorData) {
-    let message = 'Произошла ошибка';
-
-    if (errorData && errorData.detail) {
-        if (Array.isArray(errorData.detail)) {
-            // Обработка массива ошибок
-            message = errorData.detail.map(error => {
-                if (error.type === 'string_too_short') {
-                    return `Поле "${error.loc[1]}" должно содержать минимум ${error.ctx.min_length} символов.`;
-                }
-                return error.msg || 'Произошла ошибка';
-            }).join('\n');
-        } else {
-            // Обработка одиночной ошибки
-            message = errorData.detail || 'Произошла ошибка';
-        }
-    }
-
-    // Отображение сообщения об ошибке
-    alert(message);
-}
 
 async function loginFunction(event) {
     event.preventDefault();  // Предотвращаем стандартное действие формы
@@ -91,7 +69,7 @@ async function loginFunction(event) {
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('/auth/login', {
+        const response = await fetch('/site/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,7 +89,7 @@ async function loginFunction(event) {
         const result = await response.json();
 
         if (result.message) {  // Проверяем наличие сообщения о успешной регистрации
-            window.location.href = '/movies/actual';
+            window.location.href = '/pages/movies/all/actual';
         } else {
             alert(result.message || 'Неизвестная ошибка');
         }
@@ -126,7 +104,7 @@ async function logoutFunction(event) {
     event.preventDefault(); // Отменяем переход по ссылке
 
     try {
-        const response = await fetch('/auth/logout', {
+        const response = await fetch('/site/logout', {
             method: 'POST',
             credentials: 'include'
         });

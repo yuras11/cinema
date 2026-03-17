@@ -1,5 +1,5 @@
 from orm.country_model import CountryModel
-from pydantic_schemas.country_schemas import CountryCommand
+from api.comands.country.country_command import CountryCommand
 from repository.database import connection
 from sqlalchemy import select
 from fastapi import HTTPException, status

@@ -2,7 +2,7 @@ from sqlalchemy import select, delete
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.hall_model import HallModel, SeatModel
-from pydantic_schemas.hall_schemas import HallCommand
+from api.comands.hall.hall_command import HallCommand
 from repository.database import connection
 
 

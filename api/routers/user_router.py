@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
 from api.comands.user.create_user_command import CreateUserCommandHandler
+from api.comands.user.delete_user_command import DeleteUserCommandHandler
 from api.comands.user.update_user_command import UpdateUserCommandHandler
 from api.queries.user.get_all_users_query import GetAllUsersQueryHandler
 from api.queries.user.get_user_by_id_query import GetUserByIdQueryHandler
-from service.user_service import UserService
-from pydantic_schemas.user_schemas import UserCommand
+from api.comands.user.user_command import UserCommand
 
 user_router = APIRouter(prefix='/users', tags=["Users"])
 
@@ -35,7 +35,7 @@ async def update_user(userid: str, user: UserCommand):
 
 @user_router.delete('/{userid}')
 async def delete_user(userid: str):
-    result = await UserService.delete_user(userid=userid)
+    result = await DeleteUserCommandHandler.handle_async(userid=userid)
     return {'message': "User is successfully deleted"} if result else {'message': 'error'}
 
 

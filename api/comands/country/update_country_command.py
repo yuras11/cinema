@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.country_model import CountryModel
-from pydantic_schemas.country_schemas import CountryCommand
+from api.comands.country.country_command import CountryCommand
 from repository.database import connection
 
 

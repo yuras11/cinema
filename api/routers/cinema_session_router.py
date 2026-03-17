@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from api.comands.cinema_session.book_cinema_session_ticket import BookCinemaSessionTicketCommandHandler
+from api.comands.cinema_session.book_cinema_session_ticket_command import BookCinemaSessionTicketCommandHandler
 from api.comands.cinema_session.cancel_booking_cinema_session_ticket_command import \
     CancelBookingCinemaSessionTicketCommandHandler
 from api.comands.cinema_session.create_cinema_session_command import CreateCinemaSessionCommandHandler
@@ -10,7 +10,7 @@ from api.queries.cinema_session.get_all_cinema_sessions_query import GetAllCinem
 from api.queries.cinema_session.get_cinema_session_by_id_query import GetCinemaSessionByIdQueryHandler
 from dependencies import get_current_user
 from orm.user_model import UserModel
-from pydantic_schemas.cinema_session_schemas import CinemaSessionCommand, SeatBookingRequest
+from api.comands.cinema_session.cinema_session_command import CinemaSessionCommand, SeatBookingRequest
 
 cs_router = APIRouter(prefix='/cinema_sessions', tags=["cinema_sessions"])
 

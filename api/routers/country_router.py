@@ -4,7 +4,7 @@ from api.comands.country.delete_country_command import DeleteCountryCommandHandl
 from api.comands.country.update_country_command import UpdateCountryCommandHandler
 from api.queries.country.get_all_countries_query import GetAllCountriesQueryHandler
 from api.queries.country.get_country_by_id_query import GetCountryByIdQueryHandler
-from pydantic_schemas.country_schemas import CountryCommand
+from api.comands.country.country_command import CountryCommand
 
 
 country_router = APIRouter(prefix='/countries', tags=["Countries"])

@@ -5,7 +5,7 @@ from api.comands.movie.delete_movie_command import DeleteMovieCommandHandler
 from api.comands.movie.update_movie_command import UpdateMovieCommandHandler
 from api.queries.movie.get_all_movies_query import GetAllMoviesQueryHandler
 from api.queries.movie.get_movie_by_id_query import GetMovieByIdQueryHandler
-from pydantic_schemas.movie_schemas import MovieCommand
+from api.comands.movie.movie_command import MovieCommand
 
 movie_router = APIRouter(prefix='/movies', tags=["Movies"])
 

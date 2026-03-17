@@ -2,7 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete
 from orm.cinema_session_model import CinemaSessionModel
-from pydantic_schemas.cinema_session_schemas import CinemaSessionCommand
+from api.comands.cinema_session.cinema_session_command import CinemaSessionCommand
 from orm.hall_model import HallModel, SeatStatusModel
 from repository.database import connection
 

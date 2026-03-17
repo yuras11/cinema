@@ -2,9 +2,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
-from pydantic_schemas.cast_member_schemas import CastMemberCommand
+from pydantic import BaseModel, Field
 from orm.cast_member_model import CastMemberModel
 from repository.database import connection
+import datetime
+from api.comands.cast_member.cast_member_command import CastMemberCommand
 
 
 class CreateCastMemberCommandHandler:

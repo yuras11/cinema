@@ -5,7 +5,7 @@ from api.comands.hall.delete_hall_command import DeleteHallCommandHandler
 from api.comands.hall.update_hall_command import UpdateHallCommandHandler
 from api.queries.hall.get_all_halls_query import GetAllHallsQueryHandler
 from api.queries.hall.get_hall_by_id_query import GetHallByIdQueryHandler
-from pydantic_schemas.hall_schemas import HallCommand
+from api.comands.hall.hall_command import HallCommand
 
 hall_router = APIRouter(prefix='/halls', tags=["Halls"])
 

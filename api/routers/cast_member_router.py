@@ -5,7 +5,7 @@ from api.comands.cast_member.update_cast_member_command import UpdateCastMemberC
 from api.comands.cast_member.delete_cast_member_command import DeleteCastMemberCommandHandler
 from api.queries.cast_member.get_all_cast_members_query import GetAllCastMembersQueryHandler
 from api.queries.cast_member.get_cast_member_by_id_query import GetCastMemberByIdQueryHandler
-from pydantic_schemas.cast_member_schemas import CastMemberCommand
+from api.comands.cast_member.cast_member_command import CastMemberCommand
 
 cm_router = APIRouter(prefix='/cast_members', tags=["Cast_members"])
 

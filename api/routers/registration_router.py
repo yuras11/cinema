@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from fastapi import Response
 from api.comands.user.create_user_command import CreateUserCommandHandler
 from auth import get_password_hash
-from pydantic_schemas.user_schemas import UserCommand, UserLoginCommand
+from api.comands.user.user_command import UserCommand, UserLoginCommand
 from auth import authenticate_user
 from auth import create_access_token
 from fastapi.templating import Jinja2Templates

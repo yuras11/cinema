@@ -1,5 +1,5 @@
 from orm.hall_model import HallModel, SeatModel
-from pydantic_schemas.hall_schemas import HallCommand
+from api.comands.hall.hall_command import HallCommand
 from repository.database import connection
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status

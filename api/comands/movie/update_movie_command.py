@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 from orm.movie_model import MovieModel, GenreModel
 from orm.country_model import CountryModel
 from orm.cast_member_model import CastMemberModel
-from pydantic_schemas.movie_schemas import MovieCommand
+from api.comands.movie.movie_command import MovieCommand
 from repository.database import connection
 
 

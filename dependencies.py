@@ -3,10 +3,9 @@ from jose import jwt, JWTError
 from datetime import datetime, timezone
 
 from api.queries.movie.get_actual_movies_query import GetActualMoviesQueryHandler
+from api.queries.user.get_user_by_id_query import GetUserByIdQueryHandler
 from config import get_auth_data
 from orm.user_model import UserModel
-#from app.exceptions import TokenExpiredException, NoJwtException, NoUserIdException, ForbiddenException
-from service.user_service import UserService
 
 
 def get_token(request: Request):
@@ -32,7 +31,7 @@ async def get_current_user(token: str = Depends(get_token)):
     if not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Не найден ID пользователя')
 
-    user = await UserService.get_user_by_id(user_id)
+    user = await GetUserByIdQueryHandler.handle_async(userid=user_id)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='User not found')
 

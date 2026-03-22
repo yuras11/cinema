@@ -24,7 +24,6 @@ app.include_router(cs_router)
 app.include_router(page_router)
 app.include_router(registration_router)
 
-
 app.mount('/static', StaticFiles(directory='static'), 'static')
 
 

@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from orm.cinema_session_model import CinemaSessionModel
-from repository.database import connection
+from database import connection
 
 
 class GetCinemaSessionByIdQueryHandler:

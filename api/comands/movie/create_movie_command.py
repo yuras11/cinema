@@ -8,7 +8,7 @@ from orm.country_model import CountryModel
 from orm.movie_model import MovieModel, GenreModel
 from fastapi import HTTPException, status
 from api.comands.movie.movie_command import MovieCommand
-from repository.database import connection
+from database import connection
 
 
 class CreateMovieCommandHandler:

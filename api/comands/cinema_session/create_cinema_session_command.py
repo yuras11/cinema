@@ -4,7 +4,7 @@ from sqlalchemy import select
 from orm.cinema_session_model import CinemaSessionModel
 from orm.hall_model import HallModel, SeatStatusModel
 from api.comands.cinema_session.cinema_session_command import CinemaSessionCommand
-from repository.database import connection
+from database import connection
 
 
 class CreateCinemaSessionCommandHandler:

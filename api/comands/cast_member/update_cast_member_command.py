@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.cast_member_model import CastMemberModel
-from repository.database import connection
+from database import connection
 from api.comands.cast_member.cast_member_command import CastMemberCommand
 
 

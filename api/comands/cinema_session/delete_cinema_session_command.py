@@ -2,7 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete
 from orm.cinema_session_model import CinemaSessionModel
-from repository.database import connection
+from database import connection
 
 
 class DeleteCinemaSessionCommandHandler:

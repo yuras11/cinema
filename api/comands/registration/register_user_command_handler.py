@@ -1,19 +1,19 @@
+from api.comands.registration.registration_commands import RegistrationCommand
 from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
 from orm.user_model import UserModel
-from api.comands.user.user_command import UserCommand
 from database import connection
 
 
-class CreateUserCommandHandler:
+class RegisterUserCommandHandler:
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     @classmethod
     @connection
-    async def handle_async(cls, session: AsyncSession, command: UserCommand):
+    async def handle_async(cls, session: AsyncSession, command: RegistrationCommand):
         stmt = (
             select(UserModel)
             .where(UserModel.userlogin == command.userlogin)
@@ -34,10 +34,6 @@ class CreateUserCommandHandler:
             raise e
         return model
 
-
     @classmethod
     def __hash_password(cls, password: str) -> str:
         return cls.pwd_context.hash(password)
-
-
-

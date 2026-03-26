@@ -1,4 +1,4 @@
-from repository.database import connection
+from database import connection
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from orm.cast_member_model import CastMemberModel

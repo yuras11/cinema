@@ -1,12 +1,10 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import Depends
 
-from dependencies import get_current_user
 from orm.hall_model import SeatStatusModel
 from orm.user_model import UserModel
 from api.comands.cinema_session.cinema_session_command import SeatBookingRequest
-from repository.database import connection
+from database import connection
 
 
 class BookCinemaSessionTicketCommandHandler:

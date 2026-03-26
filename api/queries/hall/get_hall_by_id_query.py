@@ -1,6 +1,6 @@
 from orm.hall_model import HallModel
 from sqlalchemy import select
-from repository.database import connection
+from database import connection
 from sqlalchemy.ext.asyncio import AsyncSession
 
 

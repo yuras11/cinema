@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
 from orm.user_model import UserModel
 from api.comands.user.user_command import UserCommand
-from repository.database import connection
+from database import connection
 
 
 class UpdateUserCommandHandler:

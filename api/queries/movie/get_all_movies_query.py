@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from orm.movie_model import MovieModel
-from repository.database import connection
+from database import connection
 
 
 class GetAllMoviesQueryHandler:

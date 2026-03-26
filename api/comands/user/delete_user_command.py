@@ -2,7 +2,7 @@ from sqlalchemy import delete
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.user_model import UserModel
-from repository.database import connection
+from database import connection
 
 
 class DeleteUserCommandHandler:

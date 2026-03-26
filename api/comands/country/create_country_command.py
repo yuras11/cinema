@@ -1,6 +1,6 @@
 from orm.country_model import CountryModel
 from api.comands.country.country_command import CountryCommand
-from repository.database import connection
+from database import connection
 from sqlalchemy import select
 from fastapi import HTTPException, status
 from sqlalchemy.exc import SQLAlchemyError

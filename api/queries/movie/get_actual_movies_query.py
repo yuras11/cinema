@@ -3,7 +3,7 @@ from sqlalchemy import select
 import datetime
 from orm.cinema_session_model import CinemaSessionModel
 from orm.movie_model import MovieModel
-from repository.database import connection
+from database import connection
 
 
 class GetActualMoviesQueryHandler:

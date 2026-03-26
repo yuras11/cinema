@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.hall_model import HallModel, SeatModel
 from api.comands.hall.hall_command import HallCommand
-from repository.database import connection
+from database import connection
 
 
 class UpdateHallCommandHandler:

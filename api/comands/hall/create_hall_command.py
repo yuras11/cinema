@@ -1,6 +1,6 @@
 from orm.hall_model import HallModel, SeatModel
 from api.comands.hall.hall_command import HallCommand
-from repository.database import connection
+from database import connection
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
 from sqlalchemy import select

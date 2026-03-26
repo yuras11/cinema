@@ -3,19 +3,12 @@ import asyncio
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
 
-from repository.database import DATABASE_URL
+from database import DATABASE_URL
 from orm.base_model import Base
-from orm.cast_member_model import CastMemberModel, ProfessionModel
-from orm.cinema_session_model import CinemaSessionModel
-from orm.country_model import CountryModel
-from orm.hall_model import HallModel, SeatModel, SeatStatusModel
-from orm.movie_model import MovieModel, GenreModel
-from orm.user_model import UserModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

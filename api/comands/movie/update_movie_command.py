@@ -7,7 +7,7 @@ from orm.movie_model import MovieModel, GenreModel
 from orm.country_model import CountryModel
 from orm.cast_member_model import CastMemberModel
 from api.comands.movie.movie_command import MovieCommand
-from repository.database import connection
+from database import connection
 
 
 class UpdateMovieCommandHandler:

@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from orm.movie_model import MovieModel
-from repository.database import connection
+from database import connection
 
 
 class DeleteMovieCommandHandler:

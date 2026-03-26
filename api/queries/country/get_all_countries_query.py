@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from orm.country_model import CountryModel
-from repository.database import connection
+from database import connection
 
 
 class GetAllCountriesQueryHandler:

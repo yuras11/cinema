@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from orm.country_model import CountryModel
-from repository.database import connection
+from database import connection
 
 
 class GetCountryByIdQueryHandler:

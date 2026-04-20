@@ -5,10 +5,8 @@ from sqlalchemy.orm import mapped_column
 from typing import List
 from datetime import timedelta, date
 from sqlalchemy import Interval
-
 from orm.hall_model import HallModel
 from orm.movie_model import MovieModel
-import uuid
 
 
 class CinemaSessionModel(Base):

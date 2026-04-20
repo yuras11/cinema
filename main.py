@@ -29,8 +29,8 @@ app.mount('/static', StaticFiles(directory='static'), 'static')
 
 @app.get('/')
 async def get(request: Request):
-    return templates.TemplateResponse(name='home.html',
-                                      context={'request': request})
+    return templates.TemplateResponse('home.html',
+                                      {'request': request})
 
 
 if __name__ == "__main__":

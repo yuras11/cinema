@@ -56,11 +56,7 @@ async def ticket_booking(
         command=data,
         user=user
     )
-
-    if not success:
-        raise HTTPException(status_code=409, detail="Seat already booked")
-
-    return {"status": "ok"}
+    return {"status": "ok"} if success else {'status': 'error'}
 
 
 @cs_router.post("/{sessionid}/booking/cancel")
@@ -74,8 +70,5 @@ async def cancel_booking(
         command=data,
         userid=user.userid,
     )
-
-    if not success:
-        raise HTTPException(status_code=400, detail="Cannot cancel this booking")
 
     return {"message": "ok"}

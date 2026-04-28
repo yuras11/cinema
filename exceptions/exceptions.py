@@ -13,3 +13,7 @@ class NotFoundException(AppException):
 
 class AlreadyExistsException(AppException):
     pass
+
+
+class SeatException(AppException):
+    pass

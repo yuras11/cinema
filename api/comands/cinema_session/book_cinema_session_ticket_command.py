@@ -1,6 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from exceptions.exceptions import SeatException
 from orm.hall_model import SeatStatusModel
 from orm.user_model import UserModel
 from api.comands.cinema_session.cinema_session_command import SeatBookingRequest
@@ -28,10 +29,10 @@ class BookCinemaSessionTicketCommandHandler:
         seat_status = result.unique().scalar_one_or_none()
 
         if seat_status is None:
-            return False
+            raise SeatException('Wrong number of seat!')
 
         if seat_status.userid is not None:
-            return False
+            raise SeatException('Seat is already booked!')
 
         seat_status.userid = user.userid
         session.add(seat_status)

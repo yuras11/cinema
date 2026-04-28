@@ -1,5 +1,4 @@
 from api.comands.registration.registration_commands import RegistrationCommand
-from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession

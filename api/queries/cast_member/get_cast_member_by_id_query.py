@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
+from exceptions.exceptions import NotFoundException
 from orm.cast_member_model import CastMemberModel
 from database import connection
 
@@ -16,4 +17,6 @@ class GetCastMemberByIdQueryHandler:
         )
         result = await session.execute(stmt)
         record = result.unique().scalar_one_or_none()
+        if not record:
+            raise NotFoundException(f'Cast member with id ${memberid} has not been found!')
         return record

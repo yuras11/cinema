@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from exceptions.exceptions import SeatException
 from orm.hall_model import SeatStatusModel
 from api.comands.cinema_session.cinema_session_command import SeatBookingRequest
 from database import connection
@@ -28,7 +29,7 @@ class CancelBookingCinemaSessionTicketCommandHandler:
         seat_status = result.unique().scalar_one_or_none()
 
         if not seat_status:
-            return False
+            raise SeatException('Cannot cancel this booking!')
 
         seat_status.userid = None
         session.add(seat_status)

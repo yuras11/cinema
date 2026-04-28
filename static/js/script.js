@@ -15,11 +15,17 @@ async function regFunction(event) {
             body: JSON.stringify(data)
         });
 
+        if (response.redirected) {
+            window.location.href = response.url
+            return
+        }
+
         // Проверяем успешность ответа
         if (!response.ok) {
             // Получаем данные об ошибке
             const errorData = await response.json();
-            displayErrors(errorData);  // Отображаем ошибки
+            window.location.href = "/error/404"
+            //displayErrors(errorData);  // Отображаем ошибки
             return;  // Прерываем выполнение функции
         }
 

@@ -4,6 +4,8 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from passlib.context import CryptContext
+
+from exceptions.exceptions import AlreadyExistsException
 from orm.user_model import UserModel
 from database import connection
 
@@ -20,8 +22,7 @@ class RegisterUserCommandHandler:
         )
         existing = await session.execute(stmt)
         if existing.unique().scalar_one_or_none():
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail=f'User with login {command.userlogin} already exists!')
+            raise AlreadyExistsException(message=f'User with login {command.userlogin} already exists!')
 
         command.userpassword = cls.__hash_password(command.userpassword)
 

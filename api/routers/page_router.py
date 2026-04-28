@@ -190,3 +190,16 @@ async def get_user_profile(request: Request,
     return templates.TemplateResponse(name='profile.html',
                                       context={'request': request,
                                                'user': user})
+
+
+@page_router.get('/error/404')
+async def error_page(request: Request):
+    message = request.query_params.get("message")
+
+    return templates.TemplateResponse(
+        "errors/404.html",
+        {
+            "request": request,
+            "message": message
+        }
+    )

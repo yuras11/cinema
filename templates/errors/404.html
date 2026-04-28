@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #eee;
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="emoji">😵‍💫</div>
+
+    <h1>Error!</h1>
+
+    <p>It seems that something went wrong...</p>
+
+    <p>Message: {{message}}</p>
+
+    <a href="/" class="btn">Go to main</a>
+</div>
+
+</body>
+</html>

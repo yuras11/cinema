@@ -10,10 +10,13 @@ from api.routers.page_router import page_router
 from api.routers.registration_router import registration_router
 import uvicorn
 from fastapi.templating import Jinja2Templates
+from exceptions.exception_handlers import register_exception_handlers
 
 templates = Jinja2Templates(directory='templates')
 
 app = FastAPI()
+
+register_exception_handlers(app)
 
 app.include_router(user_router)
 app.include_router(country_router)

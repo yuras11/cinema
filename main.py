@@ -11,10 +11,38 @@ from api.routers.registration_router import registration_router
 import uvicorn
 from fastapi.templating import Jinja2Templates
 from exceptions.exception_handlers import register_exception_handlers
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from contextlib import asynccontextmanager
+from jobs.ticket_cleanup_job import DeleteExpiredTicketsJob
 
 templates = Jinja2Templates(directory='templates')
+scheduler = AsyncIOScheduler()
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+
+    # startup
+    scheduler.add_job(
+        DeleteExpiredTicketsJob.handle_async,
+        trigger="cron",
+        hour=12,
+        minute=0
+    )
+
+    scheduler.start()
+
+    print("Scheduler started")
+
+    yield
+
+    # shutdown
+    scheduler.shutdown()
+
+    print("Scheduler stopped")
+
+
+app = FastAPI(lifespan=lifespan)
 
 register_exception_handlers(app)
 
@@ -34,6 +62,8 @@ app.mount('/static', StaticFiles(directory='static'), 'static')
 async def get(request: Request):
     return templates.TemplateResponse('home.html',
                                       {'request': request})
+
+
 
 
 if __name__ == "__main__":
